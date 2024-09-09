@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import GoogleButtonLogin from "@/components/GoogleButtonLogin";
+import ButtonLogin from "@/components/ButtonLogin";
 
 const LoginComponent = () => {
   return (
@@ -16,9 +16,7 @@ const LoginComponent = () => {
           para proporcionar interpretaciones detalladas sobre los indicadores
           financieros, análisis verticales y horizontales.
         </Text>
-        <GoogleButtonLogin
-          onPressFunction={() => console.log("Login google")}
-        />
+        <ButtonLogin onPressFunction={() => console.log("Login google")} />
       </View>
     </View>
   );

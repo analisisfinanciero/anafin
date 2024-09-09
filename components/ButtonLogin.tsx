@@ -3,9 +3,11 @@ import { Text, TouchableOpacity } from "react-native";
 
 interface GoogleButtonLoginProps {
   onPressFunction: () => void;
+  textButton?: string;
 }
-const GoogleButtonLogin: React.FC<GoogleButtonLoginProps> = ({
+const ButtonLogin: React.FC<GoogleButtonLoginProps> = ({
   onPressFunction,
+  textButton,
 }) => {
   return (
     <TouchableOpacity
@@ -13,10 +15,10 @@ const GoogleButtonLogin: React.FC<GoogleButtonLoginProps> = ({
       className={"p-4 bg-[#007AFF] rounded-full m-8"}
     >
       <Text className="text-white text-center text-[18px]">
-        Iniciar sesión con google
+        {textButton ?? "Iniciar sesión con Google"}
       </Text>
     </TouchableOpacity>
   );
 };
 
-export default GoogleButtonLogin;
+export default ButtonLogin;
