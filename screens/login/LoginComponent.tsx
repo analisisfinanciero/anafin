@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
 import ButtonLogin from "@/components/ButtonLogin";
-import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const LoginComponent = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any | null>(null);
 
   GoogleSignin.configure({
     webClientId:
@@ -20,10 +19,7 @@ const LoginComponent = () => {
         showPlayServicesUpdateDialog: true,
       });
       const response = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(
-        response.data?.idToken ?? null
-      );
-      console.log("googleCredential", googleCredential);
+      setUser(response.data);
     } catch (error: any) {
       console.log("error", error);
     }
@@ -32,7 +28,7 @@ const LoginComponent = () => {
     <View>
       <Image
         source={require("./../../assets/images/login-image.jpg")}
-        className="w-full h-[600px] object-cover"
+        className="w-full h-[500px] object-cover"
       />
       <View className="p-10 bg-white mt-[-20px] rounded-t-3xl ">
         <Text className="text-[30px] font-bold">Anafin</Text>
