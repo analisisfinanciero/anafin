@@ -1,8 +1,8 @@
 import React from "react";
 import HomeComponent from "@/screens/home/HomeComponent";
 
-const index = () => {
+const Home = () => {
   return <HomeComponent />;
 };
 
-export default index;
+export default Home;

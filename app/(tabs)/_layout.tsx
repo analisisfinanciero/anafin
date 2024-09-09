@@ -5,7 +5,7 @@ const _layout = () => {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
+        name="Home"
         options={{
           title: "Home",
         }}
