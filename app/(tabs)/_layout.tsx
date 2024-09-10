@@ -1,15 +1,7 @@
-import { useAuth } from "@/context/AuthContext";
-import {Tabs} from "expo-router";
 import React from "react";
-import { Text } from "react-native";
+import { Tabs } from "expo-router";
 
 const _layout = () => {
-  const { loading } = useAuth();
-
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <Tabs>
       <Tabs.Screen
