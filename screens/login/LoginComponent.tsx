@@ -1,30 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Image, Text, View } from "react-native";
 import ButtonLogin from "@/components/ButtonLogin";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { useAuth } from "@/context/AuthContext";
+import LoadingComponent from "@/components/LoadingComponent";
 
 const LoginComponent = () => {
-  const [user, setUser] = useState<any | null>(null);
+  const { login, loading } = useAuth();
 
-  GoogleSignin.configure({
-    webClientId:
-      "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
-    scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-    offlineAccess: true,
-  });
-
-  const signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
-      });
-      const response = await GoogleSignin.signIn();
-      setUser(response.data);
-    } catch (error: any) {
-      console.log("error", error);
-    }
-  };
-  return (
+  return loading ? (
+    <LoadingComponent />
+  ) : (
     <View>
       <Image
         source={require("./../../assets/images/login-image.jpg")}
@@ -37,7 +22,11 @@ const LoginComponent = () => {
           para proporcionar interpretaciones detalladas sobre los indicadores
           financieros, análisis verticales y horizontales.
         </Text>
-        <ButtonLogin onPressFunction={signIn} />
+        <ButtonLogin
+          onPressFunction={() => {
+            login();
+          }}
+        />
       </View>
     </View>
   );
