@@ -2,14 +2,10 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import ButtonLogin from "@/components/ButtonLogin";
 import { useAuth } from "@/context/AuthContext";
-import LoadingComponent from "@/components/LoadingComponent";
 
 const LoginComponent = () => {
-  const { login, loading } = useAuth();
-
-  return loading ? (
-    <LoadingComponent />
-  ) : (
+  const { login } = useAuth();
+  return (
     <View>
       <Image
         source={require("./../../assets/images/login-image.jpg")}

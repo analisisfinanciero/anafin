@@ -10,7 +10,7 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: "white" },
         }}
       >
-        <Stack.Screen name="index" />
+        <Stack.Screen name="Login" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </AuthContextProvider>

@@ -53,6 +53,8 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     } catch (error) {
       console.error("error", error);
       setValues(null, false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,12 +79,15 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     } catch (error: any) {
       console.error("error", error);
       setValues(null, false);
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
     console.log("Usuario deslogueado");
     await GoogleSignin.signOut();
+    setLoading(false);
     setValues(null, false);
   };
 
@@ -90,8 +95,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     setUser(user);
     setIsAuthenticated(isAuthenticated);
     console.log(user ? "Usuario logueado" : "Usuario deslogueado");
-    router.push(user ? "/Home" : "/");
-    setLoading(false);
+    router.push(user ? "/Home" : "/Login");
   };
 
   const contextValue = useMemo(
