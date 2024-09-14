@@ -51,7 +51,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
         setValues(null, false);
       }
     } catch (error) {
-      console.error("error", error);
+      console.error("error getCurrentUser", error);
       setValues(null, false);
     } finally {
       setLoading(false);
@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
         setValues(null, false);
       }
     } catch (error: any) {
-      console.error("error", error);
+      console.error("error login", error);
       setValues(null, false);
     } finally {
       setLoading(false);
