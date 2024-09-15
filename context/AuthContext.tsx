@@ -94,8 +94,13 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const setValues = (user: UserInterface | null, isAuthenticated: boolean) => {
     setUser(user);
     setIsAuthenticated(isAuthenticated);
-    console.log(user ? "Usuario logueado" : "Usuario deslogueado");
-    router.push(user ? "/Home" : "/Login");
+    if (user) {
+      console.log("Usuario logueado");
+      router.push("/Home");
+    } else {
+      console.log("Usuario deslogueado");
+      router.push("/Login");
+    }
   };
 
   const contextValue = useMemo(

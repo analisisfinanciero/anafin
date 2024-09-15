@@ -8,8 +8,8 @@ const _layout = () => {
       <Tabs.Screen
         name="Home"
         options={{
-          title: "Home",
-          tabBarLabel: "Home",
+          title: "Información de la Empresa",
+          tabBarLabel: "Inicio",
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" color={color} size={24} />
@@ -17,13 +17,24 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
-        name="Reports"
+        name="StatementResults"
         options={{
-          headerTitle: "Reportes",
-          tabBarLabel: "Reportes",
+          headerTitle: "Estado de resultados",
+          tabBarLabel: "Datos",
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
-            <Ionicons name="wallet" color={color} size={24} />
+            <Ionicons name="albums" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Analytics"
+        options={{
+          headerTitle: "Analisis de datos",
+          tabBarLabel: "Analisis",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="analytics" color={color} size={24} />
           ),
         }}
       />

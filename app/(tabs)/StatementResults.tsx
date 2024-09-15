@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const Reports = () => {
+const StatementResults = () => {
   return (
     <View>
       <Text>Reportes</Text>
@@ -9,4 +9,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default StatementResults;
