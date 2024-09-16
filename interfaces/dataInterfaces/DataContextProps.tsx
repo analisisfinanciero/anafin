@@ -1,17 +1,24 @@
 export interface DataContextInterface {
-  enterpriseInformation: EnterpriseInformation | null;
-  setEnterpriseInformation: (
-    enterpriseInformation: EnterpriseInformation
+  enterpriseInformation: EnterpriseInformationInterface | null;
+  dataInformation: DataInformationInterface | null;
+  handleSetEnterpriseInformation: (
+    enterpriseInformation: EnterpriseInformationInterface
   ) => void;
 }
 
-export interface EnterpriseInformation {
+export interface EnterpriseInformationInterface {
   enterpriseName: string;
-  enterpriseType: string;
+  enterpriseType: "service" | "commercial" | "";
   years: number;
 }
 
-export interface ServiceInformation {
+export interface DataInformationInterface {
+  dataInformation: Array<
+    ServiceInformationInterface | CommercialInformationInterface
+  >;
+}
+
+export interface ServiceInformationInterface {
   creditIncome: number; // Ingresos a crédito
   cashIncome: number; // Ingresos a contado
   grossSales: number; // Ventas brutas (grossSales = creditIncome + cashIncome)
@@ -30,7 +37,7 @@ export interface ServiceInformation {
   netIncome: number; // Utilidad del ejercicio (netIncomeExercise = profitBeforeTax - incomeTax)
 }
 
-export interface CommercialInformation {
+export interface CommercialInformationInterface {
   creditIncome: number; // Ingresos a crédito
   cashIncome: number; // Ingresos a contado
   grossSales: number; // Ventas brutas (grossSales = creditIncome + cashIncome)
