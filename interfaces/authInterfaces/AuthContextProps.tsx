@@ -4,6 +4,7 @@ export interface AuthContextInterface {
   loading: boolean;
   login: () => Promise<void>;
   logout: () => Promise<void>;
+  loginWithoutGoogle: () => Promise<void>;
 }
 
 export interface UserInterface {

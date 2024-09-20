@@ -13,6 +13,7 @@ const initialValue: AuthContextInterface = {
   loading: false,
   login: async () => {},
   logout: async () => {},
+  loginWithoutGoogle: async () => {},
 };
 
 export const AuthContext = createContext<AuthContextInterface>(initialValue);
@@ -84,6 +85,17 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     }
   };
 
+  const loginWithoutGoogle = async () => {
+    setLoading(true);
+    const userData: UserInterface = {
+      id: "usuarioIncognito",
+      email: "prueba@gmail.com",
+      photoUrl: "",
+      name: "Incognito",
+    };
+    setValues(userData, true);
+  };
+
   const logout = async () => {
     console.log("Usuario deslogueado");
     await GoogleSignin.signOut();
@@ -96,16 +108,23 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     setIsAuthenticated(isAuthenticated);
     if (user) {
       console.log("Usuario logueado");
-      router.push("/Home");
+      router.replace("/Home");
     } else {
       console.log("Usuario deslogueado");
-      router.push("/Login");
+      router.replace("/Login");
     }
   };
 
   const contextValue = useMemo(
-    () => ({ user, isAuthenticated, loading, login, logout }),
-    [user, isAuthenticated, loading, login, logout]
+    () => ({
+      user,
+      isAuthenticated,
+      loading,
+      login,
+      logout,
+      loginWithoutGoogle,
+    }),
+    [user, isAuthenticated, loading, login, logout, loginWithoutGoogle]
   );
 
   return (

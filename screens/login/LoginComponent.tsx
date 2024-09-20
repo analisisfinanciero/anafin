@@ -2,9 +2,10 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import ButtonLogin from "@/components/ButtonLogin";
 import { useAuth } from "@/context/AuthContext";
+import { Colors } from "@/constants/Colors";
 
 const LoginComponent = () => {
-  const { login } = useAuth();
+  const { login, loginWithoutGoogle } = useAuth();
   return (
     <View>
       <Image
@@ -13,15 +14,16 @@ const LoginComponent = () => {
       />
       <View className="p-10 bg-white mt-[-20px] rounded-t-3xl ">
         <Text className="text-[30px] font-bold">Anafin</Text>
-        <Text className="text-[18px] text-slate-500 mt-6">
+        <Text className="text-[18px] text-slate-500 mt-4 mb-2">
           Facilita el análisis financiero, utilizando inteligencia artificial
           para proporcionar interpretaciones detalladas sobre los indicadores
           financieros, análisis verticales y horizontales.
         </Text>
+        <ButtonLogin onPressFunction={login} />
         <ButtonLogin
-          onPressFunction={() => {
-            login();
-          }}
+          textButton="Continuar sin iniciar sesión"
+          background={Colors.GrayColor}
+          onPressFunction={loginWithoutGoogle}
         />
       </View>
     </View>

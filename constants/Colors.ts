@@ -3,6 +3,7 @@ const tintColorDark = "#fff";
 
 export const Colors = {
   BlueColor: "#007AFF",
+  GrayColor: "#9BA1A6",
   light: {
     text: "#11181C",
     background: "#fff",
