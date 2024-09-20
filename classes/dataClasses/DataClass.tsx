@@ -5,12 +5,12 @@ import {
 
 export class EnterpriseInformation {
   enterpriseName: string;
-  enterpriseType: "service" | "commercial" | "";
+  enterpriseType: "service" | "commercial" | null;
   years: number;
 
   constructor() {
     this.enterpriseName = "";
-    this.enterpriseType = "";
+    this.enterpriseType = null;
     this.years = 0;
   }
 }
@@ -20,7 +20,7 @@ export class DataInformation {
     ServiceInformationInterface | CommercialInformationInterface
   >;
 
-  constructor(years: number, type: string) {
+  constructor(years: number, type: "service" | "commercial" | null) {
     this.dataInformation = new Array<
       ServiceInformationInterface | CommercialInformationInterface
     >();

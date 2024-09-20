@@ -3,24 +3,33 @@ import { Text, TextInput, View } from "react-native";
 interface CustomInputProps {
   label: string;
   value: string;
-  onChangeText: (text: string) => void;
   placeholder: string;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
+  onChangeText: (text: string) => void;
 }
 const CustomInput: React.FC<CustomInputProps> = ({
   label,
   value,
-  onChangeText,
   placeholder,
   keyboardType = "default",
+  onChangeText,
 }) => {
+  const handleTextChange = (text: string) => {
+    if (keyboardType === "numeric") {
+      const sanitizedText = text.replace(/\D/g, "");
+      onChangeText(sanitizedText);
+    } else {
+      onChangeText(text);
+    }
+  };
+
   return (
     <View className="mb-4">
-      <Text className="mb-1">{label}</Text>
+      <Text className="mb-1 text-[18px]">{label}</Text>
       <TextInput
-        className="border border-gray-300 rounded-lg p-2"
+        className="border border-gray-300 rounded-lg p-2 text-[18px]"
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={handleTextChange}
         placeholder={placeholder}
         keyboardType={keyboardType}
       />

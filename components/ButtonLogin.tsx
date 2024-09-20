@@ -13,8 +13,8 @@ const ButtonLogin: React.FC<GoogleButtonLoginProps> = ({
   return (
     <TouchableOpacity
       onPress={onPressFunction}
-      className={"p-4 rounded-full m-3"}
-      style={{ backgroundColor: background ? background : "#007AFF" }}
+      className={"p-3 rounded-full m-3"}
+      style={{ backgroundColor: background ?? "#007AFF" }}
     >
       <Text className="text-white text-center text-[18px]">
         {textButton ?? "Iniciar sesión con Google"}

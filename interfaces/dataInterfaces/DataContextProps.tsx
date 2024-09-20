@@ -8,7 +8,7 @@ export interface DataContextInterface {
 
 export interface EnterpriseInformationInterface {
   enterpriseName: string;
-  enterpriseType: "service" | "commercial" | "";
+  enterpriseType: "service" | "commercial" | null;
   years: number;
 }
 
