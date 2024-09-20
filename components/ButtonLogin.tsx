@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 interface GoogleButtonLoginProps {
@@ -14,7 +15,7 @@ const ButtonLogin: React.FC<GoogleButtonLoginProps> = ({
     <TouchableOpacity
       onPress={onPressFunction}
       className={"p-3 rounded-full m-3"}
-      style={{ backgroundColor: background ?? "#007AFF" }}
+      style={{ backgroundColor: background ?? Colors.BlueColor }}
     >
       <Text className="text-white text-center text-[18px]">
         {textButton ?? "Iniciar sesión con Google"}

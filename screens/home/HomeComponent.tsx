@@ -1,11 +1,12 @@
-import { EnterpriseInformation } from "@/classes/dataClasses/DataClass";
-import CustomInput from "@/components/CustomInput";
-import CustomSelect from "@/components/CustomSelect";
-import { EnterpriseInformationInterface } from "@/interfaces/dataInterfaces/DataContextProps";
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import { Formik } from "formik";
+
 import CustomFormButton from "@/components/CustomFormButton";
+import CustomInput from "@/components/CustomInput";
+import CustomSelect from "@/components/CustomSelect";
+import { EnterpriseInformation } from "@/classes/dataClasses/DataClass";
+import { EnterpriseInformationInterface } from "@/interfaces/dataInterfaces/DataContextProps";
 
 const activityOptions = [
   { label: "Actividad de servicios", value: "service", id: "1" },
@@ -49,10 +50,10 @@ const HomeComponent = () => {
           />
 
           <CustomInput
-            label="Años de operación"
-            value={values.years.toString()}
+            label="Años de información"
+            value={values.years != 0 ? values.years.toString() : ""}
             onChangeText={handleChange("years")}
-            placeholder="Ingrese los años de operación"
+            placeholder="Ingrese los años de información"
             keyboardType="numeric"
           />
 

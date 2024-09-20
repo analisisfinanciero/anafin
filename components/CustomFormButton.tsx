@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
@@ -15,10 +16,15 @@ const CustomFormButton: React.FC<CustomFormButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPressFunction}
-      className=""
+      className="p-3 rounded-full m-2"
       disabled={isDisabled}
+      style={{
+        backgroundColor: isDisabled ? Colors.GrayColor : Colors.BlueColor,
+      }}
     >
-      <Text className="text-[18px]">{textButton ?? "Botón default"}</Text>
+      <Text className="text-white text-center text-[18px]">
+        {textButton ?? "Botón default"}
+      </Text>
     </TouchableOpacity>
   );
 };
