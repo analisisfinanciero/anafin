@@ -22,7 +22,7 @@ const CustomFormButton: React.FC<CustomFormButtonProps> = ({
         backgroundColor: isDisabled ? Colors.GrayColor : Colors.BlueColor,
       }}
     >
-      <Text className="text-white text-center text-[18px]">
+      <Text className="text-white text-center text-[16px]">
         {textButton ?? "Botón default"}
       </Text>
     </TouchableOpacity>

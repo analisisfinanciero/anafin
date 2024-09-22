@@ -22,13 +22,13 @@ const CustomSelect: React.FC<CustomSelect> = ({
   };
   return (
     <View className="mb-4">
-      <Text className="mb-1 text-[18px]">{label}</Text>
+      <Text className="mb-1 text-[16px]">{label}</Text>
 
       <TouchableOpacity
         className="border border-gray-300 rounded-lg p-3"
         onPress={() => setModalVisible(true)}
       >
-        <Text className=" text-gray-600 text-[18px]">
+        <Text className=" text-gray-600 text-[16px]">
           {selectedValue ?? "Selecciona una opción"}
         </Text>
       </TouchableOpacity>
@@ -49,7 +49,7 @@ const CustomSelect: React.FC<CustomSelect> = ({
                   className="py-3 border-b border-gray-300"
                   onPress={() => handleSelect(item.value)}
                 >
-                  <Text className="text-[18px]">{item.label}</Text>
+                  <Text className="text-[16px]">{item.label}</Text>
                 </TouchableOpacity>
               )}
             />

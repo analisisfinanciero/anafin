@@ -27,9 +27,9 @@ const CustomInput: React.FC<CustomInputProps> = ({
 
   return (
     <View className="mb-4">
-      <Text className="mb-1 text-[18px]">{label}</Text>
+      <Text className="mb-1 text-[16px]">{label}</Text>
       <TextInput
-        className="border border-gray-300 rounded-lg p-2 text-[18px]"
+        className="border border-gray-300 rounded-lg p-2 text-[16px]"
         value={value}
         onChangeText={handleTextChange}
         placeholder={placeholder}

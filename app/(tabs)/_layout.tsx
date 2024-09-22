@@ -10,7 +10,7 @@ const _layout = () => {
         options={{
           title: "Información de la Empresa",
           tabBarLabel: "Inicio",
-          tabBarLabelStyle: { fontSize: 14 },
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" color={color} size={24} />
           ),
@@ -21,7 +21,7 @@ const _layout = () => {
         options={{
           headerTitle: "Estado de resultados",
           tabBarLabel: "Datos",
-          tabBarLabelStyle: { fontSize: 14 },
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="albums" color={color} size={24} />
           ),
@@ -32,7 +32,7 @@ const _layout = () => {
         options={{
           headerTitle: "Analisis de datos",
           tabBarLabel: "Analisis",
-          tabBarLabelStyle: { fontSize: 14 },
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="analytics" color={color} size={24} />
           ),
@@ -43,7 +43,7 @@ const _layout = () => {
         options={{
           title: "Opciones",
           tabBarLabel: "Opciones",
-          tabBarLabelStyle: { fontSize: 14 },
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="settings" color={color} size={24} />
           ),

@@ -7,7 +7,7 @@ export const InitialValuesValidationSchema = Yup.object().shape({
     .required("El nombre de la empresa es requerido"),
   enterpriseType: Yup.string().required("El tipo de empresa es requerido"),
   years: Yup.number()
-    .min(2, "Ingresa un número mayor a 0")
+    .min(2, "Ingresa un número mayor o igual a 2")
     .max(5, "Ingresa un número menor a 5")
     .required("Los años de información son requeridos"),
 });

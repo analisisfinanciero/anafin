@@ -10,7 +10,7 @@ const LoginComponent = () => {
     <View>
       <Image
         source={require("./../../assets/images/login-image.jpg")}
-        className="w-full h-[500px] object-cover"
+        className="w-full h-[400px] object-cover"
       />
       <View className="p-10 bg-white mt-[-20px] rounded-t-3xl ">
         <Text className="text-[30px] font-bold">Anafin</Text>
