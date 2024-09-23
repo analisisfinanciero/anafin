@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Keyboard, Text, View } from "react-native";
 import { Formik } from "formik";
 
 import CustomFormButton from "@/components/CustomFormButton";
@@ -7,6 +7,8 @@ import CustomInput from "@/components/CustomInput";
 import CustomSelect from "@/components/CustomSelect";
 import { EnterpriseInformation } from "@/classes/dataClasses/DataClass";
 import { InitialValuesValidationSchema } from "@/schemas/InitialValuesValidationSchema";
+import { useDataContext } from "@/context/DataContext";
+import AlertComponent from "@/components/AlertComponent";
 
 const activityOptions = [
   { label: "Actividad de servicios", value: "service", id: "1" },
@@ -14,13 +16,24 @@ const activityOptions = [
 ];
 
 const HomeComponent = () => {
-  const initialValue = new EnterpriseInformation();
+  const [initialValues, setInitialValues] = useState<EnterpriseInformation>(
+    new EnterpriseInformation()
+  );
+  const [isVisible, setIsVisible] = useState(false);
+  const { enterpriseInformation, handleSetEnterpriseInformation } =
+    useDataContext();
 
   return (
     <Formik
-      initialValues={initialValue}
+      initialValues={initialValues}
       validationSchema={InitialValuesValidationSchema}
-      onSubmit={(values) => console.log("values", values)}
+      onSubmit={(values) => {
+        const newEnterpriseInformation = new EnterpriseInformation(values);
+        handleSetEnterpriseInformation(newEnterpriseInformation);
+        setInitialValues(newEnterpriseInformation);
+        Keyboard.dismiss();
+        setIsVisible(true);
+      }}
     >
       {({
         handleChange,
@@ -29,9 +42,17 @@ const HomeComponent = () => {
         values,
         errors,
         touched,
-        isValid
+        isValid,
       }) => (
         <View className="p-4">
+          {enterpriseInformation?.enterpriseName && (
+            <AlertComponent
+              isVisible={isVisible}
+              type="info"
+              message="El estado de resultados se ha generado correctamente, dirígete a la pestaña de datos. cualquier modificación que realices en este formulario modificará el formulario del estado de resultados, para habilitar el formulario nuevamente, cierra este mensaje."
+              onDismiss={() => setIsVisible(false)}
+            />
+          )}
           <CustomInput
             label="Nombre de la empresa"
             value={values.enterpriseName}
@@ -68,8 +89,8 @@ const HomeComponent = () => {
           )}
           <CustomFormButton
             onPressFunction={handleSubmit}
-            textButton="Guardar información"
-            isDisabled={!isValid}
+            textButton="Generar estado de resultados"
+            isDisabled={!isValid || isVisible}
           />
         </View>
       )}

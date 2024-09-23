@@ -8,10 +8,10 @@ export class EnterpriseInformation {
   enterpriseType: "service" | "commercial" | null;
   years: number;
 
-  constructor() {
-    this.enterpriseName = "";
-    this.enterpriseType = null;
-    this.years = 0;
+  constructor(values?: EnterpriseInformation) {
+    this.enterpriseName = values?.enterpriseName ?? "";
+    this.enterpriseType = values?.enterpriseType ?? null;
+    this.years = parseInt(values?.years?.toString() ?? "0");
   }
 }
 
