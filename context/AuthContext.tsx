@@ -97,10 +97,10 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   };
 
   const logout = async () => {
+    setValues(null, false);
     console.log("Usuario deslogueado");
     await GoogleSignin.signOut();
     setLoading(false);
-    setValues(null, false);
   };
 
   const setValues = (user: UserInterface | null, isAuthenticated: boolean) => {

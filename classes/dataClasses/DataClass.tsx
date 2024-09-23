@@ -26,15 +26,21 @@ export class DataInformation {
     >();
     for (let i = 0; i < years; i++) {
       if (type === "service") {
-        this.dataInformation.push(new ServiceInformation());
+        this.dataInformation.push(
+          new ServiceInformation(`Año numero ${i + 1}`)
+        );
       } else if (type === "commercial") {
-        this.dataInformation.push(new CommercialInformation());
+        this.dataInformation.push(
+          new CommercialInformation(`Año numero ${i + 1}`)
+        );
       }
     }
   }
 }
 
 export class ServiceInformation {
+  currentYear: string;
+
   creditIncome: number;
   cashIncome: number;
   grossSales: number;
@@ -52,7 +58,9 @@ export class ServiceInformation {
   incomeTax: number;
   netIncome: number;
 
-  constructor() {
+  constructor(currentYear: string) {
+    this.currentYear = currentYear || "";
+
     this.creditIncome = 0;
     this.cashIncome = 0;
     this.grossSales = 0;
@@ -88,6 +96,8 @@ export class ServiceInformation {
 }
 
 export class CommercialInformation {
+  currentYear: string;
+
   creditIncome: number;
   cashIncome: number;
   grossSales: number;
@@ -116,7 +126,9 @@ export class CommercialInformation {
   incomeTax: number;
   netIncome: number;
 
-  constructor() {
+  constructor(currentYear: string) {
+    this.currentYear = currentYear || "";
+
     this.creditIncome = 0;
     this.cashIncome = 0;
     this.grossSales = 0;

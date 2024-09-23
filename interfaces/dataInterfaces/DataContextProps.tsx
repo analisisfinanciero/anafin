@@ -4,6 +4,7 @@ export interface DataContextInterface {
   handleSetEnterpriseInformation: (
     enterpriseInformation: EnterpriseInformationInterface
   ) => void;
+  clearInformation: () => void;
 }
 
 export interface EnterpriseInformationInterface {

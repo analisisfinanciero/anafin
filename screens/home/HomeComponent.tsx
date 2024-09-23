@@ -49,7 +49,7 @@ const HomeComponent = () => {
             <AlertComponent
               isVisible={isVisible}
               type="info"
-              message="El estado de resultados se ha generado correctamente, dirígete a la pestaña de datos. cualquier modificación que realices en este formulario modificará el formulario del estado de resultados, para habilitar el formulario nuevamente, cierra este mensaje."
+              message="El estado de resultados se ha generado correctamente, dirígete a la pestaña de datos. cualquier modificación que realices en este formulario modificará la información del estado de resultados, para habilitar el formulario nuevamente cierra este mensaje."
               onDismiss={() => setIsVisible(false)}
             />
           )}
