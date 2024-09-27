@@ -27,11 +27,11 @@ export class DataInformation {
     for (let i = 0; i < years; i++) {
       if (type === "service") {
         this.dataInformation.push(
-          new ServiceInformation(`Año numero ${i + 1}`)
+          new ServiceInformation(`año número ${i + 1}`)
         );
       } else if (type === "commercial") {
         this.dataInformation.push(
-          new CommercialInformation(`Año numero ${i + 1}`)
+          new CommercialInformation(`año número ${i + 1}`)
         );
       }
     }
