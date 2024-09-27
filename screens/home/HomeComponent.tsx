@@ -26,8 +26,8 @@ const HomeComponent = () => {
 
   const handleSubmit = (values: EnterpriseInformation) => {
     Alert.alert(
-      "Guardado correctamente",
-      "La información se ha guardado correctamente, dirígete a datos para visualizar el estado de resultados",
+      "Guardado exitoso",
+      `Dirígete a "Datos" para visualizar el estado de resultados`,
       [
         {
           text: "Cancelar",
@@ -68,7 +68,7 @@ const HomeComponent = () => {
           {enterpriseInformation?.enterpriseName && (
             <CustomAlertInformative
               isVisible={isVisible}
-              type="info"
+              type="warning"
               message="Si modificas este formulario, se creará nuevamente el estado de resultados, para habilitar el formulario nuevamente cierra este mensaje."
               onDismiss={() => setIsVisible(false)}
             />

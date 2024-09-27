@@ -14,7 +14,7 @@ const StatementResultsComponent = () => {
         <CustomAlertInformative
           isVisible={enterpriseInformation === null}
           type="error"
-          message="Para poder generar un estado de resultados primero debes ingresar lo datos básicos de la empresa en la pestaña de inicio."
+          message={`Ingresa lo datos básicos de la empresa en "Inicio".`}
           isCloseable={false}
           onDismiss={() => {}}
         />
