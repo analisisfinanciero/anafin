@@ -38,7 +38,7 @@ export class DataInformation {
   }
 }
 
-export class ServiceInformation {
+export class ServiceInformation implements ServiceInformationInterface {
   currentYear: string;
 
   creditIncome: number;
@@ -95,7 +95,7 @@ export class ServiceInformation {
   }
 }
 
-export class CommercialInformation {
+export class CommercialInformation implements CommercialInformationInterface {
   currentYear: string;
 
   creditIncome: number;

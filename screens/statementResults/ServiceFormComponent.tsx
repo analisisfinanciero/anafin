@@ -2,7 +2,7 @@ import { ServiceInformation } from "@/classes/dataClasses/DataClass";
 import { useDataContext } from "@/context/DataContext";
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 interface ServiceFormComponentProps {
   date: string;
@@ -11,7 +11,6 @@ interface ServiceFormComponentProps {
 const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   date,
 }) => {
-
   const [initialValues, setInitialValues] = useState<ServiceInformation>(
     new ServiceInformation(date)
   );
@@ -25,6 +24,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View>
+          <Text>{date}</Text>
         </View>
       )}
     </Formik>

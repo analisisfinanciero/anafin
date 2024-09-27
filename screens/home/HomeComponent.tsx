@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Keyboard, Text, View } from "react-native";
+import React, {  useState } from "react";
+import {  Keyboard, Text, View } from "react-native";
 import { Formik } from "formik";
 
 import CustomFormButton from "@/components/CustomFormButton";

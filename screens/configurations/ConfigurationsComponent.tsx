@@ -1,7 +1,7 @@
 import ButtonLogin from "@/components/ButtonLogin";
 import { useAuth } from "@/context/AuthContext";
 import { useDataContext } from "@/context/DataContext";
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
 
 const ConfigurationsComponent = () => {
