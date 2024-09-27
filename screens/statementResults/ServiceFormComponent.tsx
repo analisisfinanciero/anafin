@@ -1,9 +1,6 @@
-import { ServiceInformation } from "@/classes/dataClasses/DataClass";
-import { useDataContext } from "@/context/DataContext";
-import { Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { Text, View } from "react-native";
-
+import CustomAccordion from "@/components/CustomAccordion";
 interface ServiceFormComponentProps {
   date: string;
 }
@@ -11,23 +8,12 @@ interface ServiceFormComponentProps {
 const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   date,
 }) => {
-  const [initialValues, setInitialValues] = useState<ServiceInformation>(
-    new ServiceInformation(date)
-  );
-
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values) => {
-        console.log("values", values);
-      }}
-    >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View>
-          <Text>{date}</Text>
-        </View>
-      )}
-    </Formik>
+    <View>
+      <CustomAccordion title={`Formulario del ${date}`}>
+        <Text>Próximamente</Text>
+      </CustomAccordion>
+    </View>
   );
 };
 

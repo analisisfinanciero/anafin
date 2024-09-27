@@ -1,9 +1,9 @@
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Formik } from "formik";
 import { ServiceInformation } from "@/classes/dataClasses/DataClass";
 import CustomAccordion from "@/components/CustomAccordion";
 import CustomInput from "@/components/CustomInput";
-import { Formik } from "formik";
-import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
 
 interface CommercialFormComponentProps {
   date: string;
