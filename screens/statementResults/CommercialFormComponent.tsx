@@ -1,4 +1,5 @@
 import { ServiceInformation } from "@/classes/dataClasses/DataClass";
+import CustomAccordion from "@/components/CustomAccordion";
 import CustomInput from "@/components/CustomInput";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -11,30 +12,13 @@ interface CommercialFormComponentProps {
 const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
   date,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [initialValues, setInitialValues] = useState<ServiceInformation>(
     new ServiceInformation(date)
   );
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   return (
-    <View className="mb-4">
-      {/* Botón de acordeón con íconos */}
-      <TouchableOpacity
-        onPress={toggleExpand}
-        className="flex flex-row items-center justify-between bg-gray-200 p-4 rounded-lg shadow-md"
-      >
-        <Text className="text-lg font-bold">
-          {date} - {isExpanded ? "Ocultar" : "Mostrar"} Formulario
-        </Text>
-        {isExpanded ? <Text>{`<`}</Text> : <Text>{`>`}</Text>}
-      </TouchableOpacity>
-
-      {/* Contenido expandible */}
-      {isExpanded && (
+    <View>
+      <CustomAccordion title={`Formulario del ${date}`}>
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -42,11 +26,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View className="p-6 bg-gray-100 rounded-lg mt-2 shadow-sm">
-              <Text className="font-bold mb-4 text-center">
-                Formulario Comercial {date}
-              </Text>
-
+            <View className="p-6 mt-2">
               <CustomInput
                 label="Ventas Brutas"
                 placeholder="Ingrese las ventas brutas"
@@ -95,7 +75,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
             </View>
           )}
         </Formik>
-      )}
+      </CustomAccordion>
     </View>
   );
 };
