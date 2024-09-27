@@ -25,51 +25,66 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
             console.log("Formulario guardado:", values);
           }}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            values,
+          }) => (
             <View className="p-6 mt-2">
-              <CustomInput
-                label="Ventas Brutas"
-                placeholder="Ingrese las ventas brutas"
-                value={values.grossSales.toString()}
-                onChangeText={handleChange("grossSales")}
-                onBlur={handleBlur("grossSales")}
-              />
-
               <CustomInput
                 label="Ingresos a Crédito"
                 placeholder="Ingrese los ingresos a crédito"
+                keyboardType="numeric"
                 value={values.creditIncome.toString()}
-                onChangeText={handleChange("creditIncome")}
+                onChangeText={(value) => {
+                  parseFloat(value);
+                  setFieldValue("creditIncome", value);
+                  setFieldValue(
+                    "grossSales",
+                    (
+                      parseFloat(value) +
+                      parseFloat(values.cashIncome.toString())
+                    ).toFixed(2)
+                  );
+                }}
                 onBlur={handleBlur("creditIncome")}
               />
-
               <CustomInput
                 label="Ingresos en Efectivo"
                 placeholder="Ingrese los ingresos en efectivo"
+                keyboardType="numeric"
                 value={values.cashIncome.toString()}
-                onChangeText={handleChange("cashIncome")}
+                onChangeText={(value) => {
+                  parseFloat(value);
+                  setFieldValue("cashIncome", value);
+                  setFieldValue(
+                    "grossSales",
+                    (
+                      parseFloat(values.creditIncome.toString()) +
+                      parseFloat(value)
+                    ).toFixed(2)
+                  );
+                }}
                 onBlur={handleBlur("cashIncome")}
               />
-
-              {/* Campo calculado no editable */}
               <CustomInput
-                label="Ventas Netas"
-                placeholder="Ventas Netas"
-                value={(
-                  parseFloat(values.creditIncome.toString()) +
-                  parseFloat(values.cashIncome.toString())
-                ).toFixed(2)}
-                onChangeText={() => {}}
-                editable={false} // Deshabilitado porque es un campo calculado
+                label="Ventas Brutas"
+                placeholder="Ingrese las ventas brutas"
+                keyboardType="numeric"
+                value={values.grossSales.toString()}
+                onChangeText={handleChange("grossSales")}
+                onBlur={handleBlur("grossSales")}
+                editable={false}
               />
 
-              {/* Botón para guardar */}
               <TouchableOpacity
                 onPress={() => handleSubmit()}
                 className="bg-blue-600 p-3 rounded-lg mt-4 shadow-lg"
               >
                 <Text className="text-white text-center font-semibold">
-                  Guardar
+                  {`Guardar ${date}`}
                 </Text>
               </TouchableOpacity>
             </View>
