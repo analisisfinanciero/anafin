@@ -80,7 +80,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   parseFloat(values.cashIncome.toString())
                 ).toFixed(2)}
                 onChangeText={() => {}}
-                // editable={false} // Deshabilitado porque es un campo calculado
+                editable={false} // Deshabilitado porque es un campo calculado
               />
 
               {/* Botón para guardar */}

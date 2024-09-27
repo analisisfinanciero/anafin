@@ -5,6 +5,7 @@ interface CustomInputProps {
   value: string;
   placeholder: string;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
+  editable?: boolean;
   onChangeText: (text: string) => void;
   onBlur?: (action: any) => void;
 }
@@ -13,6 +14,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   value,
   placeholder,
   keyboardType = "default",
+  editable = true,
   onChangeText,
   onBlur,
 }) => {
@@ -35,6 +37,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         placeholder={placeholder}
         keyboardType={keyboardType}
         onBlur={onBlur}
+        editable={editable}
       />
     </View>
   );

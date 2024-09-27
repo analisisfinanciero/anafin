@@ -1,22 +1,22 @@
-import AlertComponent from "@/components/AlertComponent";
 import { useDataContext } from "@/context/DataContext";
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import ServiceFormComponent from "./ServiceFormComponent";
 import CommercialFormComponent from "./CommercialFormComponent";
+import CustomAlertInformative from "@/components/CustomAlertInformative";
 
 const StatementResultsComponent = () => {
   const { enterpriseInformation, dataInformation } = useDataContext();
-  const [isVisible, setIsVisible] = useState(enterpriseInformation === null);
 
   return (
     <View className="p-4">
       {enterpriseInformation === null && (
-        <AlertComponent
-          isVisible={isVisible}
+        <CustomAlertInformative
+          isVisible={enterpriseInformation === null}
           type="error"
           message="Para poder generar un estado de resultados primero debes ingresar lo datos básicos de la empresa en la pestaña de inicio."
-          onDismiss={() => setIsVisible(false)}
+          isCloseable={false}
+          onDismiss={() => {}}
         />
       )}
       {dataInformation?.dataInformation?.map((elementByYear, index) =>

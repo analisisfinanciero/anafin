@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import {  Keyboard, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Keyboard, Text, View } from "react-native";
 import { Formik } from "formik";
 
 import CustomFormButton from "@/components/CustomFormButton";
@@ -8,7 +8,8 @@ import CustomSelect from "@/components/CustomSelect";
 import { EnterpriseInformation } from "@/classes/dataClasses/DataClass";
 import { InitialValuesValidationSchema } from "@/schemas/InitialValuesValidationSchema";
 import { useDataContext } from "@/context/DataContext";
-import AlertComponent from "@/components/AlertComponent";
+import CustomAlertInformative from "@/components/CustomAlertInformative";
+import { router } from "expo-router";
 
 const activityOptions = [
   { label: "Actividad de servicios", value: "service", id: "1" },
@@ -23,17 +24,36 @@ const HomeComponent = () => {
   const { enterpriseInformation, handleSetEnterpriseInformation } =
     useDataContext();
 
+  const handleSubmit = (values: EnterpriseInformation) => {
+    Alert.alert(
+      "Guardado correctamente",
+      "La información se ha guardado correctamente, dirígete a datos para visualizar el estado de resultados",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancelar"),
+          style: "cancel",
+        },
+        {
+          text: "Ir a datos",
+          onPress: () => router.push("/StatementResults"),
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+    const newEnterpriseInformation = new EnterpriseInformation(values);
+    handleSetEnterpriseInformation(newEnterpriseInformation);
+    setInitialValues(newEnterpriseInformation);
+    Keyboard.dismiss();
+    setIsVisible(true);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={InitialValuesValidationSchema}
-      onSubmit={(values) => {
-        const newEnterpriseInformation = new EnterpriseInformation(values);
-        handleSetEnterpriseInformation(newEnterpriseInformation);
-        setInitialValues(newEnterpriseInformation);
-        Keyboard.dismiss();
-        setIsVisible(true);
-      }}
+      onSubmit={handleSubmit}
     >
       {({
         handleChange,
@@ -46,10 +66,10 @@ const HomeComponent = () => {
       }) => (
         <View className="p-4">
           {enterpriseInformation?.enterpriseName && (
-            <AlertComponent
+            <CustomAlertInformative
               isVisible={isVisible}
               type="info"
-              message="El estado de resultados se ha generado correctamente, dirígete a la pestaña de datos. cualquier modificación que realices en este formulario modificará la información del estado de resultados, para habilitar el formulario nuevamente cierra este mensaje."
+              message="Si modificas este formulario, se creará nuevamente el estado de resultados, para habilitar el formulario nuevamente cierra este mensaje."
               onDismiss={() => setIsVisible(false)}
             />
           )}
