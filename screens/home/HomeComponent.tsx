@@ -103,6 +103,7 @@ const HomeComponent = () => {
             onBlur={handleBlur("years")}
             placeholder="Ingrese los años de información"
             keyboardType="numeric"
+            inputType="number"
           />
           {errors.years && touched.years && (
             <Text className="text-red-600 mb-3">{errors.years}</Text>
