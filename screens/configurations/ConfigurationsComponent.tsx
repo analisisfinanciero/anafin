@@ -1,4 +1,4 @@
-import ButtonLogin from "@/components/ButtonLogin";
+import CustomFormButton from "@/components/CustomFormButton";
 import { useAuth } from "@/context/AuthContext";
 import { useDataContext } from "@/context/DataContext";
 import React from "react";
@@ -15,7 +15,7 @@ const ConfigurationsComponent = () => {
 
   return (
     <View>
-      <ButtonLogin
+      <CustomFormButton
         onPressFunction={handleLogout}
         textButton={
           user?.id !== "usuarioIncognito" ? "Cerrar sesión" : "Ir al login"
