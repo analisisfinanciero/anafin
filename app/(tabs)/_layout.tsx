@@ -30,8 +30,8 @@ const _layout = () => {
       <Tabs.Screen
         name="Analytics"
         options={{
-          headerTitle: "Analisis de datos",
-          tabBarLabel: "Analisis",
+          headerTitle: "Análisis de datos",
+          tabBarLabel: "Análisis",
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
             <Ionicons name="analytics" color={color} size={24} />

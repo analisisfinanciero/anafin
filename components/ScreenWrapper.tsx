@@ -16,7 +16,12 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({ children }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView keyboardShouldPersistTaps="handled">{children}</ScrollView>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          className="bg-white h-full"
+        >
+          {children}
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

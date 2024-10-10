@@ -4,6 +4,7 @@ export interface DataContextInterface {
   handleSetEnterpriseInformation: (
     enterpriseInformation: EnterpriseInformationInterface
   ) => void;
+  clearInformation: () => void;
 }
 
 export interface EnterpriseInformationInterface {
@@ -19,6 +20,7 @@ export interface DataInformationInterface {
 }
 
 export interface ServiceInformationInterface {
+  currentYear: string;
   creditIncome: number; // Ingresos a crédito
   cashIncome: number; // Ingresos a contado
   grossSales: number; // Ventas brutas (grossSales = creditIncome + cashIncome)
@@ -38,6 +40,7 @@ export interface ServiceInformationInterface {
 }
 
 export interface CommercialInformationInterface {
+  currentYear: string;
   creditIncome: number; // Ingresos a crédito
   cashIncome: number; // Ingresos a contado
   grossSales: number; // Ventas brutas (grossSales = creditIncome + cashIncome)

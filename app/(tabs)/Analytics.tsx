@@ -1,12 +1,13 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import ScreenWrapper from "@/components/ScreenWrapper";
+import AnalyticsComponent from "@/screens/analytics/AnalyticsComponent";
+import React from "react";
 
 const Analytics = () => {
   return (
-    <View>
-        <Text>Analytics</Text>
-    </View>
-  )
-}
+    <ScreenWrapper>
+      <AnalyticsComponent />
+    </ScreenWrapper>
+  );
+};
 
-export default Analytics
+export default Analytics;

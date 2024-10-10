@@ -1,11 +1,12 @@
+import ScreenWrapper from "@/components/ScreenWrapper";
+import StatementResultsComponent from "@/screens/statementResults/StatementResultsComponent";
 import React from "react";
-import { Text, View } from "react-native";
 
 const StatementResults = () => {
   return (
-    <View>
-      <Text>Reportes</Text>
-    </View>
+    <ScreenWrapper>
+      <StatementResultsComponent />
+    </ScreenWrapper>
   );
 };
 

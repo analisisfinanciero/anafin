@@ -2,8 +2,8 @@ import * as Yup from "yup";
 
 export const InitialValuesValidationSchema = Yup.object().shape({
   enterpriseName: Yup.string()
-    .min(5, "Ingresa un nombre más largo")
-    .max(20, "Ingresa un nombre más corto")
+    .min(5, "El nombre debe contener mínimo 5 caracteres")
+    .max(20, "El nombre debe contener máximo 20 caracteres")
     .required("El nombre de la empresa es requerido"),
   enterpriseType: Yup.string().required("El tipo de empresa es requerido"),
   years: Yup.number()
