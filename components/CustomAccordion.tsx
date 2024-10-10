@@ -28,9 +28,12 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
           color="black"
         />
       </TouchableOpacity>
-      {isExpanded && (
-        <View className="border-t border-neutral-200">{children}</View>
-      )}
+
+      <View
+        className={`border-t border-neutral-200 ${!isExpanded ? "hidden" : ""}`}
+      >
+        {children}
+      </View>
     </View>
   );
 };
