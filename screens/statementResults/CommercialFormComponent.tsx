@@ -15,9 +15,54 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
 }) => {
   const initialValues = new CommercialInformation(date);
 
+  const calculateValues = (values: any, setFieldValues: any) => {
+    const grossSales = calculateGrossSales(
+      values.creditIncome,
+      values.cashIncome
+    );
+    const netSales = calculateNetSales(grossSales, values.returnsAndDiscounts);
+    const costOfSales = calculateCostOfSales(
+      values.initialInventory,
+      values.purchasesCredit,
+      values.purchasesCash,
+      values.finalInventory
+    );
+    const grossOperatingIncome = calculateGrossOperatingIncome(
+      netSales,
+      costOfSales
+    );
+    const operatingProfit = calculateOperatingProfit(
+      grossOperatingIncome,
+      values.operatingSalesExpenses,
+      values.administrativeOperatingExpenses,
+      values.generalExpenses
+    );
+    const profitBeforeTax = calculateProfitBeforeTax(
+      operatingProfit,
+      values.financialIncome,
+      values.financialExpenses,
+      values.extraordinaryIncome,
+      values.extraordinaryExpenses
+    );
+    const incomeTax = calculateIncomeTax(profitBeforeTax);
+    const netIncome = calculateNetIncome(profitBeforeTax, incomeTax);
+    setFieldValues("grossSales", grossSales);
+    setFieldValues("netSales", netSales);
+    setFieldValues("costOfSales", costOfSales);
+    setFieldValues("grossOperatingIncome", grossOperatingIncome);
+    setFieldValues("operatingProfit", operatingProfit);
+    setFieldValues("profitBeforeTax", profitBeforeTax);
+    setFieldValues("incomeTax", incomeTax);
+    setFieldValues("netIncome", netIncome);
+  };
+
   const calculateGrossSales = (creditIncome: string, cashIncome: string) => {
-    const creditIncomeFloat = parseFloat(creditIncome.replace(/\./g, ""));
-    const cashIncomeFloat = parseFloat(cashIncome.replace(/\./g, ""));
+    const creditIncomeFloat = parseFloat(
+      creditIncome.toString().replace(/\./g, "")
+    );
+    const cashIncomeFloat = parseFloat(
+      cashIncome.toString().replace(/\./g, "")
+    );
     return CurrencyFormatter((creditIncomeFloat + cashIncomeFloat).toString());
   };
 
@@ -25,12 +70,131 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
     grossSales: string,
     returnsAndDiscounts: string
   ) => {
-    const grossSalesFloat = parseFloat(grossSales.replace(/\./g, ""));
+    const grossSalesFloat = parseFloat(
+      grossSales.toString().replace(/\./g, "")
+    );
     const returnsAndDiscountsFloat = parseFloat(
-      returnsAndDiscounts.replace(/\./g, "")
+      returnsAndDiscounts.toString().replace(/\./g, "")
     );
     return CurrencyFormatter(
       (grossSalesFloat - returnsAndDiscountsFloat).toString()
+    );
+  };
+
+  const calculateCostOfSales = (
+    initialInventory: string,
+    purchasesCredit: string,
+    purchasesCash: string,
+    finalInventory: string
+  ) => {
+    const initialInventoryFloat = parseFloat(
+      initialInventory.toString().replace(/\./g, "")
+    );
+    const purchasesCreditFloat = parseFloat(
+      purchasesCredit.toString().replace(/\./g, "")
+    );
+    const purchasesCashFloat = parseFloat(
+      purchasesCash.toString().replace(/\./g, "")
+    );
+    const finalInventoryFloat = parseFloat(
+      finalInventory.toString().replace(/\./g, "")
+    );
+    return CurrencyFormatter(
+      (
+        initialInventoryFloat +
+        purchasesCreditFloat +
+        purchasesCashFloat -
+        finalInventoryFloat
+      ).toString()
+    );
+  };
+
+  const calculateGrossOperatingIncome = (
+    netSales: string,
+    costOfSales: string
+  ) => {
+    const netSalesFloat = parseFloat(netSales.toString().replace(/\./g, ""));
+    const costOfSalesFloat = parseFloat(
+      costOfSales.toString().replace(/\./g, "")
+    );
+    return CurrencyFormatter((netSalesFloat - costOfSalesFloat).toString());
+  };
+
+  const calculateOperatingProfit = (
+    grossOperatingIncome: string,
+    operatingSalesExpenses: string,
+    administrativeOperatingExpenses: string,
+    generalExpenses: string
+  ) => {
+    const grossOperatingIncomeFloat = parseFloat(
+      grossOperatingIncome.toString().replace(/\./g, "")
+    );
+    const operatingSalesExpensesFloat = parseFloat(
+      operatingSalesExpenses.toString().replace(/\./g, "")
+    );
+    const administrativeOperatingExpensesFloat = parseFloat(
+      administrativeOperatingExpenses.toString().replace(/\./g, "")
+    );
+    const generalExpensesFloat = parseFloat(
+      generalExpenses.toString().replace(/\./g, "")
+    );
+    return CurrencyFormatter(
+      (
+        grossOperatingIncomeFloat -
+        operatingSalesExpensesFloat -
+        administrativeOperatingExpensesFloat -
+        generalExpensesFloat
+      ).toString()
+    );
+  };
+
+  const calculateProfitBeforeTax = (
+    operatingProfit: string,
+    financialIncome: string,
+    financialExpenses: string,
+    extraordinaryIncome: string,
+    extraordinaryExpenses: string
+  ) => {
+    const operatingProfitFloat = parseFloat(
+      operatingProfit.toString().replace(/\./g, "")
+    );
+    const financialIncomeFloat = parseFloat(
+      financialIncome.toString().replace(/\./g, "")
+    );
+    const financialExpensesFloat = parseFloat(
+      financialExpenses.toString().replace(/\./g, "")
+    );
+    const extraordinaryIncomeFloat = parseFloat(
+      extraordinaryIncome.toString().replace(/\./g, "")
+    );
+    const extraordinaryExpensesFloat = parseFloat(
+      extraordinaryExpenses.toString().replace(/\./g, "")
+    );
+    return CurrencyFormatter(
+      (
+        operatingProfitFloat +
+        financialIncomeFloat -
+        financialExpensesFloat +
+        extraordinaryIncomeFloat -
+        extraordinaryExpensesFloat
+      ).toString()
+    );
+  };
+
+  const calculateIncomeTax = (profitBeforeTax: string) => {
+    const profitBeforeTaxFloat = parseFloat(
+      profitBeforeTax.toString().replace(/\./g, "")
+    );
+    return CurrencyFormatter((profitBeforeTaxFloat * 0.35).toString());
+  };
+
+  const calculateNetIncome = (profitBeforeTax: string, incomeTax: string) => {
+    const profitBeforeTaxFloat = parseFloat(
+      profitBeforeTax.toString().replace(/\./g, "")
+    );
+    const incomeTaxFloat = parseFloat(incomeTax.toString().replace(/\./g, ""));
+    return CurrencyFormatter(
+      (profitBeforeTaxFloat - incomeTaxFloat).toString()
     );
   };
 
@@ -60,9 +224,9 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   value={values.creditIncome.toString()}
                   onChangeText={(value) => {
                     setFieldValue("creditIncome", value);
-                    setFieldValue(
-                      "grossSales",
-                      calculateGrossSales(value, values.cashIncome.toString())
+                    calculateValues(
+                      { ...values, creditIncome: value },
+                      setFieldValue
                     );
                   }}
                   onBlur={handleBlur("creditIncome")}
@@ -75,9 +239,9 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   value={values.cashIncome.toString()}
                   onChangeText={(value) => {
                     setFieldValue("cashIncome", value);
-                    setFieldValue(
-                      "grossSales",
-                      calculateGrossSales(values.creditIncome.toString(), value)
+                    calculateValues(
+                      { ...values, cashIncome: value },
+                      setFieldValue
                     );
                   }}
                   onBlur={handleBlur("cashIncome")}
@@ -100,7 +264,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.returnsAndDiscounts.toString()}
-                  onChangeText={handleChange("returnsAndDiscounts")}
+                  onChangeText={(value) => {
+                    setFieldValue("returnsAndDiscounts", value);
+                    calculateValues(
+                      { ...values, returnsAndDiscounts: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("returnsAndDiscounts")}
                 />
                 <CustomInput
@@ -121,7 +291,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.initialInventory.toString()}
-                  onChangeText={handleChange("initialInventory")}
+                  onChangeText={(value) => {
+                    setFieldValue("initialInventory", value);
+                    calculateValues(
+                      { ...values, initialInventory: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("initialInventory")}
                 />
                 <CustomInput
@@ -130,7 +306,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.finalInventory.toString()}
-                  onChangeText={handleChange("finalInventory")}
+                  onChangeText={(value) => {
+                    setFieldValue("finalInventory", value);
+                    calculateValues(
+                      { ...values, finalInventory: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("finalInventory")}
                 />
                 <CustomInput
@@ -139,7 +321,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.purchasesCredit.toString()}
-                  onChangeText={handleChange("purchasesCredit")}
+                  onChangeText={(value) => {
+                    setFieldValue("purchasesCredit", value);
+                    calculateValues(
+                      { ...values, purchasesCredit: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("purchasesCredit")}
                 />
                 <CustomInput
@@ -148,7 +336,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.purchasesCash.toString()}
-                  onChangeText={handleChange("purchasesCash")}
+                  onChangeText={(value) => {
+                    setFieldValue("purchasesCash", value);
+                    calculateValues(
+                      { ...values, purchasesCash: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("purchasesCash")}
                 />
                 <CustomInput
@@ -179,7 +373,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.operatingSalesExpenses.toString()}
-                  onChangeText={handleChange("operatingSalesExpenses")}
+                  onChangeText={(value) => {
+                    setFieldValue("operatingSalesExpenses", value);
+                    calculateValues(
+                      { ...values, operatingSalesExpenses: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("operatingSalesExpenses")}
                 />
                 <CustomInput
@@ -188,7 +388,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.administrativeOperatingExpenses.toString()}
-                  onChangeText={handleChange("administrativeOperatingExpenses")}
+                  onChangeText={(value) => {
+                    setFieldValue("administrativeOperatingExpenses", value);
+                    calculateValues(
+                      { ...values, administrativeOperatingExpenses: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("administrativeOperatingExpenses")}
                 />
                 <CustomInput
@@ -197,7 +403,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.generalExpenses.toString()}
-                  onChangeText={handleChange("generalExpenses")}
+                  onChangeText={(value) => {
+                    setFieldValue("generalExpenses", value);
+                    calculateValues(
+                      { ...values, generalExpenses: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("generalExpenses")}
                 />
                 <CustomInput
@@ -218,7 +430,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.financialIncome.toString()}
-                  onChangeText={handleChange("financialIncome")}
+                  onChangeText={(value) => {
+                    setFieldValue("financialIncome", value);
+                    calculateValues(
+                      { ...values, financialIncome: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("financialIncome")}
                 />
                 <CustomInput
@@ -227,7 +445,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.financialExpenses.toString()}
-                  onChangeText={handleChange("financialExpenses")}
+                  onChangeText={(value) => {
+                    setFieldValue("financialExpenses", value);
+                    calculateValues(
+                      { ...values, financialExpenses: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("financialExpenses")}
                 />
                 <CustomInput
@@ -236,7 +460,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.extraordinaryIncome.toString()}
-                  onChangeText={handleChange("extraordinaryIncome")}
+                  onChangeText={(value) => {
+                    setFieldValue("extraordinaryIncome", value);
+                    calculateValues(
+                      { ...values, extraordinaryIncome: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("extraordinaryIncome")}
                 />
                 <CustomInput
@@ -245,7 +475,13 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   keyboardType="numeric"
                   inputType="currency"
                   value={values.extraordinaryExpenses.toString()}
-                  onChangeText={handleChange("extraordinaryExpenses")}
+                  onChangeText={(value) => {
+                    setFieldValue("extraordinaryExpenses", value);
+                    calculateValues(
+                      { ...values, extraordinaryExpenses: value },
+                      setFieldValue
+                    );
+                  }}
                   onBlur={handleBlur("extraordinaryExpenses")}
                 />
                 <CustomInput
