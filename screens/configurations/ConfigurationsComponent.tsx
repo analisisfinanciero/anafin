@@ -1,13 +1,26 @@
-import ButtonLogin from "@/components/ButtonLogin";
+import CustomFormButton from "@/components/CustomFormButton";
 import { useAuth } from "@/context/AuthContext";
+import { useDataContext } from "@/context/DataContext";
 import React from "react";
 import { View } from "react-native";
 
 const ConfigurationsComponent = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+  const { clearInformation } = useDataContext();
+
+  const handleLogout = () => {
+    clearInformation();
+    logout();
+  };
+
   return (
     <View>
-      <ButtonLogin onPressFunction={logout} textButton="Cerrar sesión" />
+      <CustomFormButton
+        onPressFunction={handleLogout}
+        textButton={
+          user?.id !== "usuarioIncognito" ? "Cerrar sesión" : "Ir al login"
+        }
+      />
     </View>
   );
 };

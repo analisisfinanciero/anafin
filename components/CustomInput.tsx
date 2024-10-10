@@ -1,3 +1,4 @@
+import { CurrencyFormatter } from "@/utils/FunctionsUtils";
 import { Text, TextInput, View } from "react-native";
 
 interface CustomInputProps {
@@ -5,6 +6,8 @@ interface CustomInputProps {
   value: string;
   placeholder: string;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
+  editable?: boolean;
+  inputType?: "text" | "number" | "percentage" | "currency";
   onChangeText: (text: string) => void;
   onBlur?: (action: any) => void;
 }
@@ -13,16 +16,28 @@ const CustomInput: React.FC<CustomInputProps> = ({
   value,
   placeholder,
   keyboardType = "default",
+  editable = true,
+  inputType = "text",
   onChangeText,
   onBlur,
 }) => {
+  const Handlers = {
+    number: (text: string) => text.replace(/\D/g, ""),
+    percentage: (text: string) => {
+      const sanitized = text.replace(/[^0-9.]/g, "");
+      const parts = sanitized.split(".");
+      return parts.length > 2
+        ? `${parts[0]}.${parts.slice(1).join("")}`
+        : sanitized;
+    },
+    currency: (text: string) => CurrencyFormatter(text),
+
+    text: (text: string) => text,
+  };
+
   const handleTextChange = (text: string) => {
-    if (keyboardType === "numeric") {
-      const sanitizedText = text.replace(/\D/g, "");
-      onChangeText(sanitizedText);
-    } else {
-      onChangeText(text);
-    }
+    const sanitizedText = Handlers[inputType](text);
+    onChangeText(sanitizedText);
   };
 
   return (
@@ -35,6 +50,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         placeholder={placeholder}
         keyboardType={keyboardType}
         onBlur={onBlur}
+        editable={editable}
       />
     </View>
   );

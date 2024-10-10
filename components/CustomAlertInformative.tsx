@@ -3,9 +3,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 interface AlertComponentProps {
   message: string;
-  onDismiss: () => void;
   isVisible: boolean;
+  isCloseable?: boolean;
   type?: "info" | "warning" | "error" | "success";
+  onDismiss: () => void;
 }
 
 const ALERTS: {
@@ -37,10 +38,11 @@ const ALERTS: {
   },
 };
 
-const AlertComponent: React.FC<AlertComponentProps> = ({
+const CustomAlertInformative: React.FC<AlertComponentProps> = ({
   message,
   onDismiss,
   isVisible,
+  isCloseable = true,
   type = "info",
 }) => {
   if (!isVisible) return null;
@@ -53,11 +55,13 @@ const AlertComponent: React.FC<AlertComponentProps> = ({
     >
       <Ionicons name={name} size={24} color={color} />
       <Text className="ml-3 flex-1 text-base">{message}</Text>
-      <TouchableOpacity onPress={onDismiss}>
-        <Ionicons name="close-outline" size={24} color="#000" />
-      </TouchableOpacity>
+      {isCloseable && (
+        <TouchableOpacity onPress={onDismiss}>
+          <Ionicons name="close-outline" size={24} color="#000" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
-export default AlertComponent;
+export default CustomAlertInformative;
