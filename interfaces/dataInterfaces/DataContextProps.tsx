@@ -10,6 +10,7 @@ export interface DataContextInterface {
 
 export interface EnterpriseInformationInterface {
   enterpriseName: string;
+  enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
   years: number;
 }

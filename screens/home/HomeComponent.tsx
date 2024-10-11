@@ -74,6 +74,16 @@ const HomeComponent = () => {
             />
           )}
           <CustomInput
+            label="NIT de la empresa"
+            value={values.enterpriseName}
+            onChangeText={handleChange("enterpriseNIT")}
+            placeholder="Ingrese el nit de la empresa"
+            onBlur={handleBlur("enterpriseNIT")}
+          />
+          {errors.enterpriseNIT && touched.enterpriseNIT && (
+            <Text className="text-red-600 mb-3">{errors.enterpriseNIT}</Text>
+          )}
+          <CustomInput
             label="Nombre de la empresa"
             value={values.enterpriseName}
             onChangeText={handleChange("enterpriseName")}

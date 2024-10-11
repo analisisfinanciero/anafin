@@ -5,11 +5,13 @@ import {
 
 export class EnterpriseInformation {
   enterpriseName: string;
+  enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
   years: number;
 
   constructor(values?: EnterpriseInformation) {
     this.enterpriseName = values?.enterpriseName ?? "";
+    this.enterpriseNIT = values?.enterpriseNIT ?? "";
     this.enterpriseType = values?.enterpriseType ?? null;
     this.years = parseInt(values?.years?.toString() ?? "0");
   }
