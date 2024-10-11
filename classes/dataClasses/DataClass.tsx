@@ -1,19 +1,22 @@
 import {
   CommercialInformationInterface,
   DataInformationInterface,
+  EnterpriseInformationInterface,
   ServiceInformationInterface,
 } from "@/interfaces/dataInterfaces/DataContextProps";
 
-export class EnterpriseInformation {
+export class EnterpriseInformation implements EnterpriseInformationInterface {
   enterpriseName: string;
   enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
+  initialYear: number;
   years: number;
 
   constructor(values?: EnterpriseInformation) {
     this.enterpriseName = values?.enterpriseName ?? "";
     this.enterpriseNIT = values?.enterpriseNIT ?? "";
     this.enterpriseType = values?.enterpriseType ?? null;
+    this.initialYear = parseInt(values?.initialYear?.toString() ?? "0");
     this.years = parseInt(values?.years?.toString() ?? "0");
   }
 }
@@ -24,7 +27,11 @@ export class DataInformation implements DataInformationInterface {
   >;
   hasData: boolean;
 
-  constructor(years: number, type: "service" | "commercial" | null) {
+  constructor(
+    years: number,
+    type: "service" | "commercial" | null,
+    initialYear: number
+  ) {
     this.hasData = false;
     this.dataInformation = new Array<
       ServiceInformationInterface | CommercialInformationInterface
@@ -32,11 +39,11 @@ export class DataInformation implements DataInformationInterface {
     for (let i = 0; i < years; i++) {
       if (type === "service") {
         this.dataInformation.push(
-          new ServiceInformation(`año número ${i + 1}`)
+          new ServiceInformation(`año ${initialYear + i}`)
         );
       } else if (type === "commercial") {
         this.dataInformation.push(
-          new CommercialInformation(`año número ${i + 1}`)
+          new CommercialInformation(`año ${initialYear + i}`)
         );
       }
     }
