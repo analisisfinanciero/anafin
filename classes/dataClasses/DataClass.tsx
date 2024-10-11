@@ -1,26 +1,31 @@
 import {
   CommercialInformationInterface,
+  DataInformationInterface,
   ServiceInformationInterface,
 } from "@/interfaces/dataInterfaces/DataContextProps";
 
 export class EnterpriseInformation {
   enterpriseName: string;
+  enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
   years: number;
 
   constructor(values?: EnterpriseInformation) {
     this.enterpriseName = values?.enterpriseName ?? "";
+    this.enterpriseNIT = values?.enterpriseNIT ?? "";
     this.enterpriseType = values?.enterpriseType ?? null;
     this.years = parseInt(values?.years?.toString() ?? "0");
   }
 }
 
-export class DataInformation {
+export class DataInformation implements DataInformationInterface {
   dataInformation: Array<
     ServiceInformationInterface | CommercialInformationInterface
   >;
+  hasData: boolean;
 
   constructor(years: number, type: "service" | "commercial" | null) {
+    this.hasData = false;
     this.dataInformation = new Array<
       ServiceInformationInterface | CommercialInformationInterface
     >();

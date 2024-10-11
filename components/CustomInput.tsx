@@ -1,10 +1,11 @@
 import { CurrencyFormatter } from "@/utils/FunctionsUtils";
 import { Text, TextInput, View } from "react-native";
+import CurrencyInput from "react-native-currency-input";
 
 interface CustomInputProps {
   label: string;
   value: string;
-  placeholder: string;
+  placeholder?: string;
   keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
   editable?: boolean;
   inputType?: "text" | "number" | "percentage" | "currency";
@@ -43,15 +44,31 @@ const CustomInput: React.FC<CustomInputProps> = ({
   return (
     <View className="mb-4">
       <Text className="mb-1 text-[16px]">{label}</Text>
-      <TextInput
-        className="border border-gray-300 rounded-lg p-2 text-[16px]"
-        value={value}
-        onChangeText={handleTextChange}
-        placeholder={placeholder}
-        keyboardType={keyboardType}
-        onBlur={onBlur}
-        editable={editable}
-      />
+      {inputType === "currency" ? (
+        <CurrencyInput
+          className="border border-gray-300 rounded-lg p-2 text-[16px]"
+          value={parseFloat(value)}
+          onChangeValue={(valueInput) => {
+            onChangeText(valueInput?.toString() ?? "0");
+          }}
+          prefix="$  "
+          delimiter="."
+          separator=","
+          precision={2}
+          minValue={0}
+          editable={editable}
+        />
+      ) : (
+        <TextInput
+          className="border border-gray-300 rounded-lg p-2 text-[16px]"
+          value={value}
+          onChangeText={handleTextChange}
+          placeholder={placeholder ?? ""}
+          keyboardType={keyboardType}
+          onBlur={onBlur}
+          editable={editable}
+        />
+      )}
     </View>
   );
 };
