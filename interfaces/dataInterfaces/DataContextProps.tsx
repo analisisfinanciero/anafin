@@ -16,6 +16,7 @@ export interface EnterpriseInformationInterface {
 }
 
 export interface DataInformationInterface {
+  hasData: boolean;
   dataInformation: Array<
     ServiceInformationInterface | CommercialInformationInterface
   >;
@@ -44,7 +45,7 @@ export interface ServiceInformationInterface {
 
 export interface CommercialInformationInterface {
   currentYear: string;
-  
+
   creditIncome: number; // Ingresos a crédito
   cashIncome: number; // Ingresos a contado
   grossSales: number; // Ventas brutas (grossSales = creditIncome + cashIncome)

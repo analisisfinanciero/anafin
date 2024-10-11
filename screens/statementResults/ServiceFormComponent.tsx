@@ -7,10 +7,12 @@ import CustomInput from "@/components/CustomInput";
 import { CurrencyFormatter } from "@/utils/FunctionsUtils";
 interface ServiceFormComponentProps {
   date: string;
+  onSubmit: (year: string, values: any) => void;
 }
 
 const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   date,
+  onSubmit,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const initialValues = new ServiceInformation(date);
@@ -138,7 +140,10 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
       <View>
         <Formik
           initialValues={initialValues}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+            onSubmit(date, values);
+            toggleAccordion();
+          }}
         >
           {({
             handleChange,

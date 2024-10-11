@@ -75,7 +75,7 @@ const HomeComponent = () => {
           )}
           <CustomInput
             label="NIT de la empresa"
-            value={values.enterpriseName}
+            value={values.enterpriseNIT}
             onChangeText={handleChange("enterpriseNIT")}
             placeholder="Ingrese el nit de la empresa"
             onBlur={handleBlur("enterpriseNIT")}

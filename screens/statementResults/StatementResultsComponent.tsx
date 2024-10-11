@@ -27,6 +27,7 @@ const StatementResultsComponent = () => {
       }
     });
     handleSetDataInformation({
+      hasData: true,
       dataInformation: newValues as Array<
         ServiceInformationInterface | CommercialInformationInterface
       >,
@@ -70,6 +71,7 @@ const StatementResultsComponent = () => {
           <ServiceFormComponent
             key={elementByYear?.currentYear}
             date={elementByYear?.currentYear}
+            onSubmit={handleSetDataInformationByYear}
           />
         ) : (
           <CommercialFormComponent
