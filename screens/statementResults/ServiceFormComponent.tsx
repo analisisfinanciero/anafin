@@ -4,7 +4,6 @@ import CustomAccordion from "@/components/CustomAccordion";
 import { ServiceInformation } from "@/classes/dataClasses/DataClass";
 import { Formik } from "formik";
 import CustomInput from "@/components/CustomInput";
-import { CurrencyFormatter } from "@/utils/FunctionsUtils";
 interface ServiceFormComponentProps {
   date: string;
   onSubmit: (year: string, values: any) => void;
@@ -22,113 +21,29 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   };
 
   const calculateValues = (values: any, setFieldValues: any) => {
-    const grossSales = calculateGrossSales(
-      values.creditIncome,
-      values.cashIncome
-    );
-    const operatingProfit = calculateOperatingProfit(
-      grossSales,
-      values.operatingSalesExpenses,
-      values.administrativeOperatingExpenses
-    );
-    const profitBeforeTax = calculateProfitBeforeTax(
-      operatingProfit,
-      values.financialIncome,
-      values.financialExpenses,
-      values.extraordinaryIncome,
-      values.extraordinaryExpenses
-    );
-    const incomeTax = calculateIncomeTax(profitBeforeTax);
-    const netIncome = calculateNetIncome(profitBeforeTax, incomeTax);
+    const grossSales =
+      parseFloat(values.creditIncome) + parseFloat(values.cashIncome);
+
+    const operatingProfit =
+      grossSales -
+      parseFloat(values.operatingSalesExpenses) -
+      parseFloat(values.administrativeOperatingExpenses);
+
+    const profitBeforeTax =
+      operatingProfit +
+      parseFloat(values.financialIncome) -
+      parseFloat(values.financialExpenses) +
+      parseFloat(values.extraordinaryIncome) -
+      parseFloat(values.extraordinaryExpenses);
+
+    const incomeTax = Math.ceil(profitBeforeTax * 0.35);
+    const netIncome = profitBeforeTax - incomeTax;
+
     setFieldValues("grossSales", grossSales);
     setFieldValues("operatingProfit", operatingProfit);
     setFieldValues("profitBeforeTax", profitBeforeTax);
     setFieldValues("incomeTax", incomeTax);
     setFieldValues("netIncome", netIncome);
-  };
-
-  const calculateGrossSales = (creditIncome: string, cashIncome: string) => {
-    const creditIncomeFloat = parseFloat(
-      creditIncome.toString().replace(/\./g, "")
-    );
-    const cashIncomeFloat = parseFloat(
-      cashIncome.toString().replace(/\./g, "")
-    );
-    return CurrencyFormatter((creditIncomeFloat + cashIncomeFloat).toString());
-  };
-
-  const calculateOperatingProfit = (
-    grossSales: string,
-    operatingSalesExpenses: string,
-    administrativeOperatingExpenses: string
-  ) => {
-    const grossSalesFloat = parseFloat(
-      grossSales.toString().replace(/\./g, "")
-    );
-    const operatingSalesExpensesFloat = parseFloat(
-      operatingSalesExpenses.toString().replace(/\./g, "")
-    );
-    const administrativeOperatingExpensesFloat = parseFloat(
-      administrativeOperatingExpenses.toString().replace(/\./g, "")
-    );
-    return CurrencyFormatter(
-      (
-        grossSalesFloat -
-        operatingSalesExpensesFloat -
-        administrativeOperatingExpensesFloat
-      ).toString()
-    );
-  };
-
-  const calculateProfitBeforeTax = (
-    operatingProfit: string,
-    financialIncome: string,
-    financialExpenses: string,
-    extraordinaryIncome: string,
-    extraordinaryExpenses: string
-  ) => {
-    const operatingProfitFloat = parseFloat(
-      operatingProfit.toString().replace(/\./g, "")
-    );
-    const financialIncomeFloat = parseFloat(
-      financialIncome.toString().replace(/\./g, "")
-    );
-    const financialExpensesFloat = parseFloat(
-      financialExpenses.toString().replace(/\./g, "")
-    );
-    const extraordinaryIncomeFloat = parseFloat(
-      extraordinaryIncome.toString().replace(/\./g, "")
-    );
-    const extraordinaryExpensesFloat = parseFloat(
-      extraordinaryExpenses.toString().replace(/\./g, "")
-    );
-    return CurrencyFormatter(
-      (
-        operatingProfitFloat +
-        financialIncomeFloat -
-        financialExpensesFloat +
-        extraordinaryIncomeFloat -
-        extraordinaryExpensesFloat
-      ).toString()
-    );
-  };
-
-  const calculateIncomeTax = (profitBeforeTax: string) => {
-    const profitBeforeTaxFloat = parseFloat(
-      profitBeforeTax.toString().replace(/\./g, "")
-    );
-    const incomeTax = Math.ceil(profitBeforeTaxFloat * 0.35);
-    return CurrencyFormatter(incomeTax.toString());
-  };
-
-  const calculateNetIncome = (profitBeforeTax: string, incomeTax: string) => {
-    const profitBeforeTaxFloat = parseFloat(
-      profitBeforeTax.toString().replace(/\./g, "")
-    );
-    const incomeTaxFloat = parseFloat(incomeTax.toString().replace(/\./g, ""));
-    return CurrencyFormatter(
-      (profitBeforeTaxFloat - incomeTaxFloat).toString()
-    );
   };
 
   return (
@@ -156,8 +71,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
               <View className="border-b border-neutral-200 mb-2">
                 <CustomInput
                   label="Ingresos a Crédito"
-                  placeholder="Ingrese los ingresos a crédito"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.creditIncome.toString()}
                   onChangeText={(value) => {
@@ -171,8 +84,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Ingresos en Efectivo"
-                  placeholder="Ingrese los ingresos en efectivo"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.cashIncome.toString()}
                   onChangeText={(value) => {
@@ -186,8 +97,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Ingresos netos"
-                  placeholder="Ingrese los ingresos netos"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.grossSales.toString()}
                   onChangeText={handleChange("grossSales")}
@@ -198,8 +107,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
               <View className="border-b border-neutral-200 mb-2">
                 <CustomInput
                   label="Gastos Operacionales de Ventas"
-                  placeholder="Ingrese los gastos operacionales de ventas"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.operatingSalesExpenses.toString()}
                   onChangeText={(value) => {
@@ -213,8 +120,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Gastos Operacionales de Administración"
-                  placeholder="Ingrese los gastos operacionales de administración"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.administrativeOperatingExpenses.toString()}
                   onChangeText={(value) => {
@@ -228,8 +133,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Utilidad Operacional"
-                  placeholder="Ingrese la utilidad operacional"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.operatingProfit.toString()}
                   onChangeText={handleChange("operatingProfit")}
@@ -240,8 +143,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
               <View className="border-b border-neutral-200 mb-2">
                 <CustomInput
                   label="Ingresos Financieros"
-                  placeholder="Ingrese los ingresos financieros"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.financialIncome.toString()}
                   onChangeText={(value) => {
@@ -255,8 +156,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Gastos Financieros"
-                  placeholder="Ingrese los gastos financieros"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.financialExpenses.toString()}
                   onChangeText={(value) => {
@@ -270,8 +169,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Ingresos Extraordinarios"
-                  placeholder="Ingrese los ingresos extraordinarios"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.extraordinaryIncome.toString()}
                   onChangeText={(value) => {
@@ -285,8 +182,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Gastos Extraordinarios"
-                  placeholder="Ingrese los gastos extraordinarios"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.extraordinaryExpenses.toString()}
                   onChangeText={(value) => {
@@ -300,8 +195,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Utilidad Antes de Impuestos"
-                  placeholder="Ingrese la utilidad antes de impuestos"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.profitBeforeTax.toString()}
                   onChangeText={handleChange("profitBeforeTax")}
@@ -312,8 +205,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
               <View className="border-b border-neutral-200 mb-2">
                 <CustomInput
                   label="Impuesto a la Renta"
-                  placeholder="Ingrese el impuesto a la renta"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.incomeTax.toString()}
                   onChangeText={handleChange("incomeTax")}
@@ -322,8 +213,6 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 />
                 <CustomInput
                   label="Utilidad del Ejercicio"
-                  placeholder="Ingrese la utilidad del ejercicio"
-                  keyboardType="numeric"
                   inputType="currency"
                   value={values.netIncome.toString()}
                   onChangeText={handleChange("netIncome")}
