@@ -11,6 +11,8 @@ const initialValue: DataContextInterface = {
   enterpriseInformation: null,
   dataInformation: null,
   handleSetEnterpriseInformation: () => {},
+  handleSetDataInformation: () => {},
+  clearInformation: () => {},
 };
 
 export const DataContext = createContext<DataContextInterface>(initialValue);
@@ -32,14 +34,33 @@ export const DataContextProvider = ({ children }: ChildrenProps) => {
     );
     setDataInformation(dataInformationValue);
   };
-  
+
+  const handleSetDataInformation = (
+    dataInformation: DataInformationInterface
+  ) => {
+    setDataInformation(dataInformation);
+  };
+
+  const clearInformation = () => {
+    setEnterpriseInformation(null);
+    setDataInformation(null);
+  };
+
   const contextValue = useMemo(
     () => ({
       enterpriseInformation,
       dataInformation,
       handleSetEnterpriseInformation,
+      handleSetDataInformation,
+      clearInformation,
     }),
-    [enterpriseInformation, dataInformation, handleSetEnterpriseInformation]
+    [
+      enterpriseInformation,
+      dataInformation,
+      handleSetEnterpriseInformation,
+      handleSetDataInformation,
+      clearInformation,
+    ]
   );
 
   return (

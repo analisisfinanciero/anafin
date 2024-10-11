@@ -1,40 +1,51 @@
 import {
   CommercialInformationInterface,
+  DataInformationInterface,
   ServiceInformationInterface,
 } from "@/interfaces/dataInterfaces/DataContextProps";
 
 export class EnterpriseInformation {
   enterpriseName: string;
+  enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
   years: number;
 
   constructor(values?: EnterpriseInformation) {
     this.enterpriseName = values?.enterpriseName ?? "";
+    this.enterpriseNIT = values?.enterpriseNIT ?? "";
     this.enterpriseType = values?.enterpriseType ?? null;
     this.years = parseInt(values?.years?.toString() ?? "0");
   }
 }
 
-export class DataInformation {
+export class DataInformation implements DataInformationInterface {
   dataInformation: Array<
     ServiceInformationInterface | CommercialInformationInterface
   >;
+  hasData: boolean;
 
   constructor(years: number, type: "service" | "commercial" | null) {
+    this.hasData = false;
     this.dataInformation = new Array<
       ServiceInformationInterface | CommercialInformationInterface
     >();
     for (let i = 0; i < years; i++) {
       if (type === "service") {
-        this.dataInformation.push(new ServiceInformation());
+        this.dataInformation.push(
+          new ServiceInformation(`año número ${i + 1}`)
+        );
       } else if (type === "commercial") {
-        this.dataInformation.push(new CommercialInformation());
+        this.dataInformation.push(
+          new CommercialInformation(`año número ${i + 1}`)
+        );
       }
     }
   }
 }
 
-export class ServiceInformation {
+export class ServiceInformation implements ServiceInformationInterface {
+  currentYear: string;
+
   creditIncome: number;
   cashIncome: number;
   grossSales: number;
@@ -52,7 +63,9 @@ export class ServiceInformation {
   incomeTax: number;
   netIncome: number;
 
-  constructor() {
+  constructor(currentYear: string) {
+    this.currentYear = currentYear || "";
+
     this.creditIncome = 0;
     this.cashIncome = 0;
     this.grossSales = 0;
@@ -87,7 +100,9 @@ export class ServiceInformation {
   }
 }
 
-export class CommercialInformation {
+export class CommercialInformation implements CommercialInformationInterface {
+  currentYear: string;
+
   creditIncome: number;
   cashIncome: number;
   grossSales: number;
@@ -116,7 +131,9 @@ export class CommercialInformation {
   incomeTax: number;
   netIncome: number;
 
-  constructor() {
+  constructor(currentYear: string) {
+    this.currentYear = currentYear || "";
+
     this.creditIncome = 0;
     this.cashIncome = 0;
     this.grossSales = 0;
