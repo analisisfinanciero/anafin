@@ -193,7 +193,8 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
     const profitBeforeTaxFloat = parseFloat(
       profitBeforeTax.toString().replace(/\./g, "")
     );
-    return CurrencyFormatter((profitBeforeTaxFloat * 0.35).toString());
+    const incomeTax = Math.ceil(profitBeforeTaxFloat * 0.35);
+    return CurrencyFormatter(incomeTax.toString());
   };
 
   const calculateNetIncome = (profitBeforeTax: string, incomeTax: string) => {
@@ -508,7 +509,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   editable={false}
                 />
               </View>
-              <View>
+              <View className="border-b border-neutral-200 mb-2">
                 <CustomInput
                   label="Impuesto a la Renta"
                   placeholder="Ingrese el impuesto a la renta"

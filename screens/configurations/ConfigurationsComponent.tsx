@@ -20,14 +20,6 @@ const ConfigurationsComponent = () => {
         className="w-full h-[400px] object-cover"
       />
       <View className="p-10 bg-white mt-[-20px] rounded-t-3xl ">
-        <Text style={{ textAlign: "center" }} className="text-[30px] font-bold">
-          Anafin
-        </Text>
-        <Text className="text-[18px] text-slate-500 mt-4 mb-2">
-          Facilita el análisis financiero, utilizando inteligencia artificial
-          para proporcionar interpretaciones detalladas sobre los indicadores
-          financieros, análisis verticales y horizontales.
-        </Text>
         <CustomFormButton
           onPressFunction={handleLogout}
           textButton={
