@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Formik } from "formik";
 import { CommercialInformation } from "@/classes/dataClasses/DataClass";
@@ -8,12 +8,20 @@ import { CurrencyFormatter } from "@/utils/FunctionsUtils";
 
 interface CommercialFormComponentProps {
   date: string;
+  onSubmit: (year: string, values: any) => void;
 }
 
 const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
   date,
+  onSubmit,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const initialValues = new CommercialInformation(date);
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+  };
 
   const calculateValues = (values: any, setFieldValues: any) => {
     const grossSales = calculateGrossSales(
@@ -199,12 +207,17 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
   };
 
   return (
-    <View>
-      <CustomAccordion title={`Formulario del ${date}`}>
+    <CustomAccordion
+      title={`Formulario del ${date}`}
+      isOpen={isOpen}
+      onToggle={toggleAccordion}
+    >
+      <View className="inline-block">
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            console.log("Formulario guardado:", values);
+            onSubmit(date, values);
+            toggleAccordion();
           }}
         >
           {({
@@ -529,8 +542,8 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
             </View>
           )}
         </Formik>
-      </CustomAccordion>
-    </View>
+      </View>
+    </CustomAccordion>
   );
 };
 

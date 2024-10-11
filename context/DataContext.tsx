@@ -11,6 +11,7 @@ const initialValue: DataContextInterface = {
   enterpriseInformation: null,
   dataInformation: null,
   handleSetEnterpriseInformation: () => {},
+  handleSetDataInformation: () => {},
   clearInformation: () => {},
 };
 
@@ -34,6 +35,12 @@ export const DataContextProvider = ({ children }: ChildrenProps) => {
     setDataInformation(dataInformationValue);
   };
 
+  const handleSetDataInformation = (
+    dataInformation: DataInformationInterface
+  ) => {
+    setDataInformation(dataInformation);
+  };
+
   const clearInformation = () => {
     setEnterpriseInformation(null);
     setDataInformation(null);
@@ -44,12 +51,14 @@ export const DataContextProvider = ({ children }: ChildrenProps) => {
       enterpriseInformation,
       dataInformation,
       handleSetEnterpriseInformation,
+      handleSetDataInformation,
       clearInformation,
     }),
     [
       enterpriseInformation,
       dataInformation,
       handleSetEnterpriseInformation,
+      handleSetDataInformation,
       clearInformation,
     ]
   );
