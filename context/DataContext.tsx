@@ -30,7 +30,8 @@ export const DataContextProvider = ({ children }: ChildrenProps) => {
     setEnterpriseInformation(enterpriseInformation);
     const dataInformationValue = new DataInformation(
       enterpriseInformation.years,
-      enterpriseInformation.enterpriseType
+      enterpriseInformation.enterpriseType,
+      enterpriseInformation.initialYear
     );
     setDataInformation(dataInformationValue);
   };

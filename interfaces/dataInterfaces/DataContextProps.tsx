@@ -12,6 +12,7 @@ export interface EnterpriseInformationInterface {
   enterpriseName: string;
   enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
+  initialYear: number;
   years: number;
 }
 
