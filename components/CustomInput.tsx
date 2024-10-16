@@ -44,17 +44,17 @@ const CustomInput: React.FC<CustomInputProps> = ({
   return (
     <View className="mb-4">
       <Text className="mb-1 text-[16px]">{label}</Text>
-      {inputType === "currency" ? (
+      {inputType === "currency" || inputType === "percentage" ? (
         <CurrencyInput
           className="border border-gray-300 rounded-lg p-2 text-[16px]"
           value={parseFloat(value)}
           onChangeValue={(valueInput) => {
             onChangeText(valueInput?.toString() ?? "0");
           }}
-          prefix="$  "
+          prefix={inputType === "currency" ? "$  " : "%  "}
           delimiter="."
-          separator=","
-          precision={2}
+          separator={inputType === "currency" ? "," : "."}
+          precision={inputType === "currency" ? 2 : 1}
           minValue={0}
           editable={editable}
         />
