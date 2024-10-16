@@ -8,14 +8,22 @@ import { useDataContext } from "@/context/DataContext";
 interface ServiceFormComponentProps {
   date: string;
   onSubmit: (year: string, values: any) => void;
+  editableForm?: boolean;
+  initialData?: ServiceInformation;
+  percentageValues?: boolean;
+  title?: string;
 }
 
 const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   date,
   onSubmit,
+  editableForm = true,
+  initialData = new ServiceInformation(date),
+  percentageValues = false,
+  title,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const initialValues = new ServiceInformation(date);
+  const initialValues = initialData;
   const { enterpriseInformation } = useDataContext();
   const formRef = useRef<any>(null);
 
@@ -55,7 +63,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
 
   return (
     <CustomAccordion
-      title={`Formulario del ${date}`}
+      title={title ?? `Formulario del ${date}`}
       isOpen={isOpen}
       onToggle={toggleAccordion}
     >
@@ -81,7 +89,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Ingresos a Crédito"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.creditIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("creditIncome", value);
@@ -91,10 +99,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("creditIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ingresos en Efectivo"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.cashIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("cashIncome", value);
@@ -104,10 +113,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("cashIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ingresos netos"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.grossSales.toString()}
                     onChangeText={handleChange("grossSales")}
                     onBlur={handleBlur("grossSales")}
@@ -117,7 +127,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Gastos Operacionales de Ventas"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.operatingSalesExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("operatingSalesExpenses", value);
@@ -127,10 +137,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("operatingSalesExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Operacionales de Administración"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.administrativeOperatingExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("administrativeOperatingExpenses", value);
@@ -140,10 +151,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("administrativeOperatingExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Utilidad Operacional"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.operatingProfit.toString()}
                     onChangeText={handleChange("operatingProfit")}
                     onBlur={handleBlur("operatingProfit")}
@@ -153,7 +165,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Ingresos Financieros"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.financialIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("financialIncome", value);
@@ -163,10 +175,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("financialIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Financieros"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.financialExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("financialExpenses", value);
@@ -176,10 +189,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("financialExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ingresos Extraordinarios"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.extraordinaryIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("extraordinaryIncome", value);
@@ -189,10 +203,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("extraordinaryIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Extraordinarios"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.extraordinaryExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("extraordinaryExpenses", value);
@@ -202,10 +217,11 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("extraordinaryExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Utilidad Antes de Impuestos"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.profitBeforeTax.toString()}
                     onChangeText={handleChange("profitBeforeTax")}
                     onBlur={handleBlur("profitBeforeTax")}
@@ -215,7 +231,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Impuesto a la Renta"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.incomeTax.toString()}
                     onChangeText={handleChange("incomeTax")}
                     onBlur={handleBlur("incomeTax")}
@@ -223,21 +239,23 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                   />
                   <CustomInput
                     label="Utilidad del Ejercicio"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.netIncome.toString()}
                     onChangeText={handleChange("netIncome")}
                     onBlur={handleBlur("netIncome")}
                     editable={false}
                   />
                 </View>
-                <TouchableOpacity
-                  onPress={() => handleSubmit()}
-                  className="bg-blue-600 p-3 rounded-lg mt-4 shadow-lg"
-                >
-                  <Text className="text-white text-center font-semibold">
-                    {`Guardar ${date}`}
-                  </Text>
-                </TouchableOpacity>
+                {editableForm && (
+                  <TouchableOpacity
+                    onPress={() => handleSubmit()}
+                    className="bg-blue-600 p-3 rounded-lg mt-4 shadow-lg"
+                  >
+                    <Text className="text-white text-center font-semibold">
+                      {`Guardar ${date}`}
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             );
           }}

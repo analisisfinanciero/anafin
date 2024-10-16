@@ -9,14 +9,22 @@ import { useDataContext } from "@/context/DataContext";
 interface CommercialFormComponentProps {
   date: string;
   onSubmit: (year: string, values: any) => void;
+  editableForm?: boolean;
+  initialData?: CommercialInformation;
+  percentageValues?: boolean;
+  title?: string;
 }
 
 const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
   date,
   onSubmit,
+  editableForm = true,
+  initialData = new CommercialInformation(date),
+  percentageValues = false,
+  title,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const initialValues = new CommercialInformation(date);
+  const initialValues = initialData;
   const { enterpriseInformation } = useDataContext();
   const formRef = useRef<any>(null);
 
@@ -70,7 +78,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
 
   return (
     <CustomAccordion
-      title={`Formulario del ${date}`}
+      title={title ?? `Formulario del ${date}`}
       isOpen={isOpen}
       onToggle={toggleAccordion}
     >
@@ -96,7 +104,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Ingresos a Crédito"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.creditIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("creditIncome", value);
@@ -106,10 +114,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("creditIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ingresos en Efectivo"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.cashIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("cashIncome", value);
@@ -118,11 +127,12 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                         setFieldValue
                       );
                     }}
+                    editable={editableForm}
                     onBlur={handleBlur("cashIncome")}
                   />
                   <CustomInput
                     label="Ventas Brutas"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.grossSales.toString()}
                     onChangeText={handleChange("grossSales")}
                     onBlur={handleBlur("grossSales")}
@@ -132,7 +142,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Devoluciones y Descuentos"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.returnsAndDiscounts.toString()}
                     onChangeText={(value) => {
                       setFieldValue("returnsAndDiscounts", value);
@@ -142,10 +152,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("returnsAndDiscounts")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ventas Netas"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.netSales.toString()}
                     onChangeText={handleChange("netSales")}
                     onBlur={handleBlur("netSales")}
@@ -155,7 +166,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Inventario Inicial"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.initialInventory.toString()}
                     onChangeText={(value) => {
                       setFieldValue("initialInventory", value);
@@ -165,10 +176,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("initialInventory")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Inventario Final"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.finalInventory.toString()}
                     onChangeText={(value) => {
                       setFieldValue("finalInventory", value);
@@ -178,10 +190,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("finalInventory")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Compras a Crédito"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.purchasesCredit.toString()}
                     onChangeText={(value) => {
                       setFieldValue("purchasesCredit", value);
@@ -191,10 +204,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("purchasesCredit")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Compras al Contado"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.purchasesCash.toString()}
                     onChangeText={(value) => {
                       setFieldValue("purchasesCash", value);
@@ -204,10 +218,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("purchasesCash")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Costo de Ventas"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.costOfSales.toString()}
                     onChangeText={handleChange("costOfSales")}
                     onBlur={handleBlur("costOfSales")}
@@ -215,7 +230,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   />
                   <CustomInput
                     label="Utilidad Bruta Operacional"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.grossOperatingIncome.toString()}
                     onChangeText={handleChange("grossOperatingIncome")}
                     onBlur={handleBlur("grossOperatingIncome")}
@@ -225,7 +240,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Gastos Operacionales de Ventas"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.operatingSalesExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("operatingSalesExpenses", value);
@@ -235,10 +250,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("operatingSalesExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Operacionales de Administración"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.administrativeOperatingExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("administrativeOperatingExpenses", value);
@@ -248,10 +264,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("administrativeOperatingExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Generales"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.generalExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("generalExpenses", value);
@@ -261,10 +278,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("generalExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Utilidad Operacional"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.operatingProfit.toString()}
                     onChangeText={handleChange("operatingProfit")}
                     onBlur={handleBlur("operatingProfit")}
@@ -274,7 +292,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Ingresos Financieros"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.financialIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("financialIncome", value);
@@ -284,10 +302,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("financialIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Financieros"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.financialExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("financialExpenses", value);
@@ -297,10 +316,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("financialExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Ingresos Extraordinarios"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.extraordinaryIncome.toString()}
                     onChangeText={(value) => {
                       setFieldValue("extraordinaryIncome", value);
@@ -310,10 +330,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("extraordinaryIncome")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Gastos Extraordinarios"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.extraordinaryExpenses.toString()}
                     onChangeText={(value) => {
                       setFieldValue("extraordinaryExpenses", value);
@@ -323,10 +344,11 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                       );
                     }}
                     onBlur={handleBlur("extraordinaryExpenses")}
+                    editable={editableForm}
                   />
                   <CustomInput
                     label="Utilidad Antes de Impuestos"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.profitBeforeTax.toString()}
                     onChangeText={handleChange("profitBeforeTax")}
                     onBlur={handleBlur("profitBeforeTax")}
@@ -336,7 +358,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                 <View className="border-b border-neutral-200 mb-2">
                   <CustomInput
                     label="Impuesto a la Renta"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.incomeTax.toString()}
                     onChangeText={handleChange("incomeTax")}
                     onBlur={handleBlur("incomeTax")}
@@ -344,22 +366,23 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
                   />
                   <CustomInput
                     label="Utilidad del Ejercicio"
-                    inputType="currency"
+                    inputType={percentageValues ? "percentage" : "currency"}
                     value={values.netIncome.toString()}
                     onChangeText={handleChange("netIncome")}
                     onBlur={handleBlur("netIncome")}
                     editable={false}
                   />
                 </View>
-
-                <TouchableOpacity
-                  onPress={() => handleSubmit()}
-                  className="bg-blue-600 p-3 rounded-lg mt-4 shadow-lg"
-                >
-                  <Text className="text-white text-center font-semibold">
-                    {`Guardar ${date}`}
-                  </Text>
-                </TouchableOpacity>
+                {editableForm && (
+                  <TouchableOpacity
+                    onPress={() => handleSubmit()}
+                    className="bg-blue-600 p-3 rounded-lg mt-4 shadow-lg"
+                  >
+                    <Text className="text-white text-center font-semibold">
+                      {`Guardar ${date}`}
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             );
           }}
