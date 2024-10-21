@@ -3,7 +3,7 @@ import CustomAlertInformative from "@/components/CustomAlertInformative";
 import { useDataContext } from "@/context/DataContext";
 
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import ServiceFormComponent from "../statementResults/ServiceFormComponent";
 import CommercialFormComponent from "../statementResults/CommercialFormComponent";
 import { HorizontalAnalyticsClassByYear } from "@/classes/analyticsClass/HorizontalAnalyticsClass";
@@ -69,56 +69,62 @@ const AnalyticsComponent = () => {
         />
       )}
 
-      {dataInformation?.hasData &&
-        verticalAnalysis.length > 0 &&
-        verticalAnalysis.map((elementByYear: any) =>
-          enterpriseInformation?.enterpriseType === "service" ? (
-            <ServiceFormComponent
-              key={elementByYear?.currentYear}
-              title={`Análisis vertical ${elementByYear?.currentYear}`}
-              date={elementByYear?.currentYear}
-              initialData={elementByYear}
-              editableForm={false}
-              percentageValues={true}
-              onSubmit={() => {}}
-            />
-          ) : (
-            <CommercialFormComponent
-              key={elementByYear?.currentYear}
-              title={`Análisis vertical ${elementByYear?.currentYear}`}
-              date={elementByYear?.currentYear}
-              initialData={elementByYear}
-              editableForm={false}
-              percentageValues={true}
-              onSubmit={() => {}}
-            />
-          )
-        )}
-      {dataInformation?.hasData &&
-        horizontalAnalysis.length > 0 &&
-        horizontalAnalysis.map((elementByYear: any) =>
-          enterpriseInformation?.enterpriseType === "service" ? (
-            <ServiceFormComponent
-              key={elementByYear?.currentYear}
-              title={`Análisis Horizontal ${elementByYear?.currentYear}`}
-              date={elementByYear?.currentYear}
-              initialData={elementByYear}
-              editableForm={false}
-              percentageValues={true}
-              onSubmit={() => {}}
-            />
-          ) : (
-            <CommercialFormComponent
-              key={elementByYear?.currentYear}
-              title={`Análisis horizontal ${elementByYear?.currentYear}`}
-              date={elementByYear?.currentYear}
-              initialData={elementByYear}
-              editableForm={false}
-              percentageValues={true}
-              onSubmit={() => {}}
-            />
-          )
-        )}
+      {dataInformation?.hasData && verticalAnalysis.length > 0 && (
+        <View className="mb-4">
+          <Text className="text-[18px] font-bold mb-4 self-center">Análisis Vertical</Text>
+          {verticalAnalysis.map((elementByYear: any) =>
+            enterpriseInformation?.enterpriseType === "service" ? (
+              <ServiceFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            ) : (
+              <CommercialFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            )
+          )}
+        </View>
+      )}
+      {dataInformation?.hasData && horizontalAnalysis.length > 0 && (
+        <View className="mb-4">
+          <Text className="text-[18px] font-bold mb-4 self-center">Análisis Horizontal</Text>
+          {horizontalAnalysis.map((elementByYear: any) =>
+            enterpriseInformation?.enterpriseType === "service" ? (
+              <ServiceFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            ) : (
+              <CommercialFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            )
+          )}
+        </View>
+      )}
     </View>
   );
 };
