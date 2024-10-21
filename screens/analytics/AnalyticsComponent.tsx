@@ -11,7 +11,12 @@ import { HorizontalAnalyticsClassByYear } from "@/classes/analyticsClass/Horizon
 const AnalyticsComponent = () => {
   const [verticalAnalysis, setVerticalAnalysis] = useState<any>([]);
   const [horizontalAnalysis, setHorizontalAnalysis] = useState<any>([]);
-  const { enterpriseInformation, dataInformation } = useDataContext();
+  const {
+    enterpriseInformation,
+    analyticsInformation,
+    dataInformation,
+    handleSetAnalyticsInformation,
+  } = useDataContext();
 
   useEffect(() => {
     if (dataInformation?.hasData) {
@@ -35,6 +40,11 @@ const AnalyticsComponent = () => {
       }
     });
     setHorizontalAnalysis(horizontalAnalysisArray);
+    handleSetAnalyticsInformation({
+      hasData: true,
+      verticalAnalytics: analyticsInformation?.verticalAnalytics,
+      horizontalAnalytics: horizontalAnalysisArray,
+    });
   };
 
   const getVerticalAnalysis = () => {
@@ -47,6 +57,11 @@ const AnalyticsComponent = () => {
       }
     );
     setVerticalAnalysis(verticalAnalysisArray);
+    handleSetAnalyticsInformation({
+      hasData: true,
+      verticalAnalytics: verticalAnalysisArray,
+      horizontalAnalytics: analyticsInformation?.horizontalAnalytics,
+    });
   };
 
   return (
@@ -71,7 +86,9 @@ const AnalyticsComponent = () => {
 
       {dataInformation?.hasData && verticalAnalysis.length > 0 && (
         <View className="mb-4">
-          <Text className="text-[18px] font-bold mb-4 self-center">Análisis Vertical</Text>
+          <Text className="text-[18px] font-bold mb-4 self-center">
+            Análisis Vertical
+          </Text>
           {verticalAnalysis.map((elementByYear: any) =>
             enterpriseInformation?.enterpriseType === "service" ? (
               <ServiceFormComponent
@@ -99,7 +116,9 @@ const AnalyticsComponent = () => {
       )}
       {dataInformation?.hasData && horizontalAnalysis.length > 0 && (
         <View className="mb-4">
-          <Text className="text-[18px] font-bold mb-4 self-center">Análisis Horizontal</Text>
+          <Text className="text-[18px] font-bold mb-4 self-center">
+            Análisis Horizontal
+          </Text>
           {horizontalAnalysis.map((elementByYear: any) =>
             enterpriseInformation?.enterpriseType === "service" ? (
               <ServiceFormComponent

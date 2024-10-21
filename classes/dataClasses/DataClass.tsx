@@ -1,4 +1,9 @@
 import {
+  VerticalAnalyticsClassByYearInterface,
+  HorizontalAnalyticsClassByYearInterface,
+} from "@/interfaces/analyticsInterfaces/AnalyticsProps";
+import {
+  AnalyticsInformationInterface,
   CommercialInformationInterface,
   DataInformationInterface,
   EnterpriseInformationInterface,
@@ -21,6 +26,17 @@ export class EnterpriseInformation implements EnterpriseInformationInterface {
   }
 }
 
+export class AnalyticsInformation implements AnalyticsInformationInterface {
+  hasData: boolean;
+  verticalAnalytics: (VerticalAnalyticsClassByYearInterface | null)[];
+  horizontalAnalytics: (HorizontalAnalyticsClassByYearInterface | null)[];
+
+  constructor() {
+    this.hasData = false;
+    this.verticalAnalytics = [];
+    this.horizontalAnalytics = [];
+  }
+}
 export class DataInformation implements DataInformationInterface {
   dataInformation: Array<
     ServiceInformationInterface | CommercialInformationInterface

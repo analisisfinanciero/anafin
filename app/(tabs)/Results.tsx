@@ -1,11 +1,11 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
+import ResultsComponents from "@/screens/results/ResultsComponents";
 import React from "react";
-import { Text } from "react-native";
 
 const Results = () => {
   return (
     <ScreenWrapper>
-      <Text>Interpretaciones</Text>
+      <ResultsComponents />
     </ScreenWrapper>
   );
 };
