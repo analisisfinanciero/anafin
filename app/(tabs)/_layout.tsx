@@ -39,6 +39,17 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
+        name="Results"
+        options={{
+          title: "Resultados",
+          tabBarLabel: "Resultados",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="bar-chart" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="Configurations"
         options={{
           title: "Opciones",
