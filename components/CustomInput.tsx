@@ -55,7 +55,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           delimiter="."
           separator={inputType === "currency" ? "," : "."}
           precision={inputType === "currency" ? 2 : 1}
-          minValue={0}
+          minValue={inputType === "currency" ? 0 : -999}
           editable={editable}
         />
       ) : (
