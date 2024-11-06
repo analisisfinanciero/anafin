@@ -13,19 +13,20 @@ const AnalyticsComponent = () => {
   const [horizontalAnalysis, setHorizontalAnalysis] = useState<any>([]);
   const {
     enterpriseInformation,
-    analyticsInformation,
     dataInformation,
     handleSetAnalyticsInformation,
   } = useDataContext();
 
   useEffect(() => {
     if (dataInformation?.hasData) {
-      getVerticalAnalysis();
-      getHorizontalAnalysis();
+      getHorizontalAndVerticalAnalysis();
+    } else {
+      setVerticalAnalysis([]);
+      setHorizontalAnalysis([]);
     }
   }, [dataInformation]);
 
-  const getHorizontalAnalysis = () => {
+  const getHorizontalAndVerticalAnalysis = () => {
     const horizontalAnalysisArray = new Array();
     dataInformation?.dataInformation?.forEach((dataByYear, index) => {
       if (index !== 0) {
@@ -40,14 +41,6 @@ const AnalyticsComponent = () => {
       }
     });
     setHorizontalAnalysis(horizontalAnalysisArray);
-    handleSetAnalyticsInformation({
-      hasData: true,
-      verticalAnalytics: analyticsInformation?.verticalAnalytics,
-      horizontalAnalytics: horizontalAnalysisArray,
-    });
-  };
-
-  const getVerticalAnalysis = () => {
     const verticalAnalysisArray = dataInformation?.dataInformation?.map(
       (dataByYear) => {
         return new VerticalAnalyticsClassByYear(
@@ -60,7 +53,7 @@ const AnalyticsComponent = () => {
     handleSetAnalyticsInformation({
       hasData: true,
       verticalAnalytics: verticalAnalysisArray,
-      horizontalAnalytics: analyticsInformation?.horizontalAnalytics,
+      horizontalAnalytics: horizontalAnalysisArray,
     });
   };
 
@@ -84,7 +77,7 @@ const AnalyticsComponent = () => {
         />
       )}
 
-      {dataInformation?.hasData && verticalAnalysis.length > 0 && (
+      {verticalAnalysis.length > 0 && (
         <View className="mb-4">
           <Text className="text-[18px] font-bold mb-4 self-center">
             Análisis Vertical
@@ -114,7 +107,7 @@ const AnalyticsComponent = () => {
           )}
         </View>
       )}
-      {dataInformation?.hasData && horizontalAnalysis.length > 0 && (
+      {horizontalAnalysis.length > 0 && (
         <View className="mb-4">
           <Text className="text-[18px] font-bold mb-4 self-center">
             Análisis Horizontal
