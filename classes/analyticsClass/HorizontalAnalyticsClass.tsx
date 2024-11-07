@@ -202,8 +202,8 @@ export class HorizontalAnalyticsClassByYear
   }
   calculateValue(baseValue: number, newValue: number) {
     if (baseValue === 0) return 0;
-    return (
-      parseFloat((((newValue - baseValue) / baseValue) * 100).toFixed(1)) ?? 0
-    );
+    const result =
+      parseFloat((((newValue - baseValue) / baseValue) * 100).toFixed(1)) ?? 0;
+    return isNaN(result) ? 0 : result;
   }
 }

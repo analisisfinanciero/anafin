@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CustomAccordion from "@/components/CustomAccordion";
 import { ServiceInformation } from "@/classes/dataClasses/DataClass";
@@ -22,13 +22,18 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
   percentageValues = false,
   title,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const initialValues = initialData;
   const { enterpriseInformation } = useDataContext();
   const formRef = useRef<any>(null);
 
   useEffect(() => {
-    formRef.current?.resetForm({ values: new ServiceInformation(date) });
+    if (isFirstRender) {
+      setIsFirstRender(false);
+    } else {
+      formRef.current?.resetForm({ values: new ServiceInformation(date) });
+    }
   }, [enterpriseInformation]);
 
   const toggleAccordion = () => {
