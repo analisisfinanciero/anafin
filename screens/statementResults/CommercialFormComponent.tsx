@@ -23,13 +23,18 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
   percentageValues = false,
   title,
 }) => {
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const initialValues = initialData;
   const { enterpriseInformation } = useDataContext();
   const formRef = useRef<any>(null);
 
   useEffect(() => {
-    formRef.current?.resetForm({ values: new CommercialInformation(date) });
+    if (isFirstRender) {
+      setIsFirstRender(false);
+    } else {
+      formRef.current?.resetForm({ values: new CommercialInformation(date) });
+    }
   }, [enterpriseInformation]);
 
   const toggleAccordion = () => {
@@ -84,6 +89,7 @@ const CommercialFormComponent: React.FC<CommercialFormComponentProps> = ({
     >
       <View className="inline-block">
         <Formik
+          innerRef={formRef}
           initialValues={initialValues}
           enableReinitialize={true}
           onSubmit={(values) => {

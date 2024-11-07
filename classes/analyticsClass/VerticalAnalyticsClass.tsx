@@ -162,6 +162,7 @@ export class VerticalAnalyticsClassByYear
   }
 
   calculateValue(value: number) {
-    return parseFloat(((value / this.baseValue) * 100).toFixed(1)) ?? 0;
+    const result = parseFloat(((value / this.baseValue) * 100).toFixed(1)) ?? 0;
+    return isNaN(result) ? 0 : result;
   }
 }
