@@ -42,6 +42,10 @@ const ResultsComponents = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setResultGenerated(null);
+  }, [enterpriseInformation]);
+
   const getIAResults = async (email: string) => {
     setLoading({ ...loading, resultsList: true });
     ResultsService.getAllEarningsByUid(email)
@@ -107,11 +111,11 @@ const ResultsComponents = () => {
 
   return (
     <View className="p-4">
-      {!analyticsInformation?.hasData && (
+      {(!analyticsInformation?.hasData || !isAvailable) && (
         <CustomAlertInformative
           isVisible={true}
           type="error"
-          message={`Primero verifica los análisis Horizontales y verticales generados en "Análisis".`}
+          message={`Primero verifica los análisis Horizontales y verticales generados en "Análisis". Asegúrate de que la información este correctamente diligenciada.`}
           isCloseable={false}
           onDismiss={() => {}}
         />

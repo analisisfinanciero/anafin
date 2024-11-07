@@ -32,7 +32,7 @@ const ResultsForm = ({
         <Text>{resultContent}</Text>
         <CustomFormButton
           onPressFunction={OnPressButton}
-          backgroundColor={isNew ? Colors.BlueColor : Colors.RedColor}
+          backgroundColor={isNew ? Colors.GreenColor : Colors.RedColor}
           textButton={isNew ? "Guardar" : "Eliminar"}
           isDisabled={disabledButton}
         />
