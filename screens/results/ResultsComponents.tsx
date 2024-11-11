@@ -23,11 +23,15 @@ const ResultsComponents = () => {
   const [loading, setLoading] = useState({
     result: false,
     resultsList: false,
+    savingResult: false,
+    deleteResult: false,
   });
 
   let resultId = uuid.v4();
 
   useEffect(() => {
+    console.log(analyticsInformation);
+
     if (
       analyticsInformation?.hasData &&
       analyticsInformation?.horizontalAnalytics &&
@@ -40,7 +44,7 @@ const ResultsComponents = () => {
     } else {
       setShowSessionAlert(true);
     }
-  }, []);
+  }, [analyticsInformation]);
 
   useEffect(() => {
     setResultGenerated(null);
@@ -65,6 +69,9 @@ const ResultsComponents = () => {
   };
 
   const generateIAResults = async () => {
+    const objectToAnalyze = {
+      
+    }
     const result = {
       id: resultId,
       title: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}`,
@@ -75,6 +82,7 @@ const ResultsComponents = () => {
   };
 
   const handleSaveResult = () => {
+    setLoading({ ...loading, savingResult: true });
     ResultsService.insertResults(resultGenerated)
       .then((response) => {
         console.log(response);
@@ -96,22 +104,29 @@ const ResultsComponents = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading({ ...loading, savingResult: false });
       });
   };
 
   const handleDeleteResult = (id: string) => {
+    setLoading({ ...loading, deleteResult: true });
     ResultsService.deleteResult(id)
       .then(() => {
         getIAResults(user?.email ?? "");
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading({ ...loading, deleteResult: false });
       });
   };
 
   return (
     <View className="p-4">
-      {(!analyticsInformation?.hasData || !isAvailable) && (
+      {!isAvailable && (
         <CustomAlertInformative
           isVisible={true}
           type="error"
@@ -151,13 +166,19 @@ const ResultsComponents = () => {
               resultContent={resultGenerated.results}
               isNew={true}
               OnPressButton={handleSaveResult}
-              disabledButton={user?.id === "usuarioIncognito"}
+              disabledButton={
+                user?.id === "usuarioIncognito" || loading.savingResult
+              }
             />
           )}
-          <CustomFormButton
-            onPressFunction={generateIAResults}
-            textButton={"Generar resultados con IA"}
-          />
+          {loading.savingResult || loading.resultsList ? (
+            <Spinner />
+          ) : (
+            <CustomFormButton
+              onPressFunction={generateIAResults}
+              textButton={"Generar resultados con IA"}
+            />
+          )}
         </View>
       )}
       <View className="mb-2 mt-10">
@@ -175,6 +196,7 @@ const ResultsComponents = () => {
               title={result.title}
               resultContent={result.results}
               OnPressButton={() => handleDeleteResult(result.id)}
+              disabledButton={loading.deleteResult}
             />
           ))}
       </View>
