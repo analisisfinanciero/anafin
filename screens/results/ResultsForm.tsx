@@ -29,7 +29,7 @@ const ResultsForm = ({
       onToggle={toggleAccordion}
     >
       <View className="p-4">
-        <Text>{resultContent}</Text>
+        <Text className="text-[16px]">{resultContent}</Text>
         <CustomFormButton
           onPressFunction={OnPressButton}
           backgroundColor={isNew ? Colors.GreenColor : Colors.RedColor}
