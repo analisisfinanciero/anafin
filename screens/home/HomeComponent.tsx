@@ -107,6 +107,18 @@ const HomeComponent = () => {
             <Text className="text-red-600 mb-3">{errors.enterpriseType}</Text>
           )}
           <CustomInput
+            label="Año inicial"
+            value={values.initialYear != 0 ? values.initialYear.toString() : ""}
+            onChangeText={handleChange("initialYear")}
+            onBlur={handleBlur("initialYear")}
+            placeholder="Ingrese el año inicial"
+            keyboardType="numeric"
+            inputType="number"
+          />
+          {errors.initialYear && touched.initialYear && (
+            <Text className="text-red-600 mb-3">{errors.initialYear}</Text>
+          )}
+          <CustomInput
             label="Años de información"
             value={values.years != 0 ? values.years.toString() : ""}
             onChangeText={handleChange("years")}

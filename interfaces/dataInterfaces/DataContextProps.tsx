@@ -1,10 +1,17 @@
+import {
+  HorizontalAnalyticsClassByYearInterface,
+  VerticalAnalyticsClassByYearInterface,
+} from "../analyticsInterfaces/AnalyticsProps";
+
 export interface DataContextInterface {
   enterpriseInformation: EnterpriseInformationInterface | null;
   dataInformation: DataInformationInterface | null;
+  analyticsInformation: AnalyticsInformationInterface | null;
   handleSetEnterpriseInformation: (
     enterpriseInformation: EnterpriseInformationInterface
   ) => void;
   handleSetDataInformation: (dataInformation: DataInformationInterface) => void;
+  handleSetAnalyticsInformation: (analyticsInformation: any) => void;
   clearInformation: () => void;
 }
 
@@ -12,6 +19,7 @@ export interface EnterpriseInformationInterface {
   enterpriseName: string;
   enterpriseNIT: string;
   enterpriseType: "service" | "commercial" | null;
+  initialYear: number;
   years: number;
 }
 
@@ -20,6 +28,12 @@ export interface DataInformationInterface {
   dataInformation: Array<
     ServiceInformationInterface | CommercialInformationInterface
   >;
+}
+
+export interface AnalyticsInformationInterface {
+  hasData: boolean;
+  verticalAnalytics: Array<VerticalAnalyticsClassByYearInterface | null>;
+  horizontalAnalytics: Array<HorizontalAnalyticsClassByYearInterface | null>;
 }
 
 export interface ServiceInformationInterface {

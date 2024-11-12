@@ -1,10 +1,61 @@
+import { VerticalAnalyticsClassByYear } from "@/classes/analyticsClass/VerticalAnalyticsClass";
 import CustomAlertInformative from "@/components/CustomAlertInformative";
 import { useDataContext } from "@/context/DataContext";
-import React from "react";
-import { View } from "react-native";
+
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+import ServiceFormComponent from "../statementResults/ServiceFormComponent";
+import CommercialFormComponent from "../statementResults/CommercialFormComponent";
+import { HorizontalAnalyticsClassByYear } from "@/classes/analyticsClass/HorizontalAnalyticsClass";
 
 const AnalyticsComponent = () => {
-  const { dataInformation } = useDataContext();
+  const [verticalAnalysis, setVerticalAnalysis] = useState<any>([]);
+  const [horizontalAnalysis, setHorizontalAnalysis] = useState<any>([]);
+  const {
+    enterpriseInformation,
+    dataInformation,
+    handleSetAnalyticsInformation,
+  } = useDataContext();
+
+  useEffect(() => {
+    if (dataInformation?.hasData) {
+      getHorizontalAndVerticalAnalysis();
+    } else {
+      setVerticalAnalysis([]);
+      setHorizontalAnalysis([]);
+    }
+  }, [dataInformation]);
+
+  const getHorizontalAndVerticalAnalysis = () => {
+    const horizontalAnalysisArray = new Array();
+    dataInformation?.dataInformation?.forEach((dataByYear, index) => {
+      if (index !== 0) {
+        const baseYear = dataInformation?.dataInformation[index - 1];
+        horizontalAnalysisArray.push(
+          new HorizontalAnalyticsClassByYear(
+            dataByYear,
+            baseYear,
+            enterpriseInformation?.enterpriseType ?? null
+          ).generateHorizontalAnalysis()
+        );
+      }
+    });
+    setHorizontalAnalysis(horizontalAnalysisArray);
+    const verticalAnalysisArray = dataInformation?.dataInformation?.map(
+      (dataByYear) => {
+        return new VerticalAnalyticsClassByYear(
+          dataByYear,
+          enterpriseInformation?.enterpriseType ?? null
+        ).generateVerticalAnalysis();
+      }
+    );
+    setVerticalAnalysis(verticalAnalysisArray);
+    handleSetAnalyticsInformation({
+      hasData: true,
+      verticalAnalytics: verticalAnalysisArray,
+      horizontalAnalytics: horizontalAnalysisArray,
+    });
+  };
 
   return (
     <View className="p-4">
@@ -24,6 +75,67 @@ const AnalyticsComponent = () => {
           isCloseable={false}
           onDismiss={() => {}}
         />
+      )}
+
+      {verticalAnalysis.length > 0 && (
+        <View className="mb-4">
+          <Text className="text-[18px] font-bold mb-4 self-center">
+            Análisis Vertical
+          </Text>
+          {verticalAnalysis.map((elementByYear: any) =>
+            enterpriseInformation?.enterpriseType === "service" ? (
+              <ServiceFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            ) : (
+              <CommercialFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            )
+          )}
+        </View>
+      )}
+      {horizontalAnalysis.length > 0 && (
+        <View className="mb-4">
+          <Text className="text-[18px] font-bold mb-4 self-center">
+            Análisis Horizontal
+          </Text>
+          {horizontalAnalysis.map((elementByYear: any) =>
+            enterpriseInformation?.enterpriseType === "service" ? (
+              <ServiceFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            ) : (
+              <CommercialFormComponent
+                key={elementByYear?.currentYear}
+                title={`Análisis ${elementByYear?.currentYear}`}
+                date={elementByYear?.currentYear}
+                initialData={elementByYear}
+                editableForm={false}
+                percentageValues={true}
+                onSubmit={() => {}}
+              />
+            )
+          )}
+        </View>
       )}
     </View>
   );
