@@ -30,8 +30,6 @@ const ResultsComponents = () => {
   let resultId = uuid.v4();
 
   useEffect(() => {
-    console.log(analyticsInformation);
-
     if (
       analyticsInformation?.hasData &&
       analyticsInformation?.horizontalAnalytics &&
@@ -69,16 +67,80 @@ const ResultsComponents = () => {
   };
 
   const generateIAResults = async () => {
-    const objectToAnalyze = {
-      
-    }
+    setLoading({ ...loading, result: true });
+    const verticalText = generateVerticalText(
+      analyticsInformation?.verticalAnalytics
+    );
+    const horizontalText = generateHorizontalText(
+      analyticsInformation?.horizontalAnalytics
+    );
     const result = {
       id: resultId,
       title: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}`,
-      results: "Resultados de IA",
+      results: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}.\n\n${verticalText}`,
       email: user?.email,
     };
+    setTimeout(() => {
+      setResultGenerated(result);
+      setLoading({ ...loading, result: false });
+    }, 3000);
     setResultGenerated(result);
+  };
+
+  const generateVerticalText = (verticalInformation: any) => {
+    let text = "";
+    if (enterpriseInformation?.enterpriseType === "service") {
+      verticalInformation?.forEach((element: any) => {
+        const introText = `Resultados del análisis vertical en el ${element.currentYear}.\n`;
+        const netExpenses =
+          element.operatingSalesExpenses +
+          element.administrativeOperatingExpenses;
+        const expensesTex =
+          netExpenses > 0
+            ? `Del cien por ciento de los ingresos, el ${netExpenses}% corresponden a los gastos operacionales del negocio.`
+            : "En este periodo no se presentaron gastos operacionales.";
+
+        const operatingProfitText = `Quedando una utilidad bruta operacional equivalente al ${element.operatingProfit}%.`;
+
+        const netIncomeText =
+          element.netIncome > 0
+            ? `Con esta utilidad se cubren los otros gastos y el impuesto a la renta, quedando una utilidad positiva del ejercicio correspondiente al ${element.netIncome}%.`
+            : `Con esta utilidad se cubren los otros gastos y el impuesto a la renta, quedando una utilidad negativa del ejercicio correspondiente al ${element.netIncome}%.`;
+
+        text += `${introText}${expensesTex} ${operatingProfitText} ${netIncomeText}\n\n`;
+      });
+    } else {
+      verticalInformation?.forEach((element: any) => {
+        const introText = `Resultados del análisis vertical en el ${element.currentYear}.\n`;
+        const netSalesText = `Del cien por ciento de las ventas, teniendo en cuenta las devoluciones y los descuentos el ${element.netSales}% corresponde a las ventas netas.`;
+        const costOfSalesText = `El costo de ventas corresponde al ${element.costOfSales}%.`;
+        const grossOperatingIncomeText = `Quedando una utilidad bruta operacional equivalente al ${element.grossOperatingIncome}%.`;
+        const operatingProfitText = `Con lo cual se absorben los gastos operacionales para obtener una utilidad operacional del ${element.operatingProfit}.`;
+        const netIncomeText =
+          element.netIncome > 0
+            ? `Con esta utilidad se cubren los gastos financieros y extraordinarios, y el impuesto a la renta quedando una utilidad positiva del ejercicio correspondiente al ${element.netIncome}%.`
+            : `Con esta utilidad se cubren los gastos financieros y extraordinarios, y el impuesto a la renta quedando una utilidad negativa del ejercicio correspondiente al ${element.netIncome}%.`;
+        text += `${introText}${netSalesText} ${costOfSalesText} ${grossOperatingIncomeText} ${operatingProfitText} ${netIncomeText}\n\n`;
+      });
+    }
+    return text;
+  };
+
+  const generateHorizontalText = (horizontalInformation: any) => {
+    let text = "";
+    if (enterpriseInformation?.enterpriseType === "service") {
+      horizontalInformation?.forEach((element: any) => {
+        console.log("horizontalInformation", element);
+
+        const introText = `Resultados del análisis horizontal en el ${element.currentYear}.\n`;
+        const netIncomeText = `La utilidad del ejercicio en el año ${element.currentYear} fue de ${element.netIncome}.`;
+        const netIncomeLastYearText = `La utilidad del ejercicio en el año ${element.lastYear} fue de ${element.netIncomeLastYear}.`;
+        const netIncomeVariationText = `La variación de la utilidad del ejercicio en el año ${element.currentYear} con respecto al año ${element.lastYear} fue del ${element.netIncomeVariation}%.`;
+        text += `${introText}${netIncomeText} ${netIncomeLastYearText} ${netIncomeVariationText}\n\n`;
+      });
+    } else {
+    }
+    return text;
   };
 
   const handleSaveResult = () => {
@@ -159,17 +221,21 @@ const ResultsComponents = () => {
           <Text className="text-[18px] font-bold mb-4 self-center">
             Nuevo resultado
           </Text>
-          {resultGenerated && (
-            <ResultsForm
-              key={resultGenerated.id}
-              title={resultGenerated.title}
-              resultContent={resultGenerated.results}
-              isNew={true}
-              OnPressButton={handleSaveResult}
-              disabledButton={
-                user?.id === "usuarioIncognito" || loading.savingResult
-              }
-            />
+          {loading.result ? (
+            <Spinner />
+          ) : (
+            resultGenerated && (
+              <ResultsForm
+                key={resultGenerated.id}
+                title={resultGenerated.title}
+                resultContent={resultGenerated.results}
+                isNew={true}
+                OnPressButton={handleSaveResult}
+                disabledButton={
+                  user?.id === "usuarioIncognito" || loading.savingResult
+                }
+              />
+            )
           )}
           {loading.savingResult || loading.resultsList ? (
             <Spinner />
