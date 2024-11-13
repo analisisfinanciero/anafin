@@ -1,32 +1,20 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import CustomFormButton from "@/components/CustomFormButton";
+import { router } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function NotFoundScreen() {
+  const redirectFunction = () => {
+    router.replace("/Login");
+  };
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
-      </ThemedView>
-    </>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text style={{ fontSize: 18, marginBottom: 20 }}>
+        Algo ha salido mal con las rutas. Por favor regresa al inicio.
+      </Text>
+      <CustomFormButton
+        onPressFunction={redirectFunction}
+        textButton="Regresar al inicio"
+      />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});
