@@ -5,7 +5,7 @@ import {
   UserInterface,
 } from "@/interfaces/authInterfaces/AuthContextProps";
 
-//import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 import { router } from "expo-router";
 
@@ -26,19 +26,19 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    /*GoogleSignin.configure({
+    GoogleSignin.configure({
       webClientId:
         "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
       scopes: ["https://www.googleapis.com/auth/drive.readonly"],
       offlineAccess: true,
-    });*/
+    });
     getCurrentUser();
   }, []);
 
   const getCurrentUser = async () => {
     setLoading(true);
     try {
-      /*const { type, data } = await GoogleSignin.signInSilently();
+      const { type, data } = await GoogleSignin.signInSilently();
       if (type === "success") {
         const userData: UserInterface = {
           id: data.user.id ?? "",
@@ -49,7 +49,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
         setValues(userData, true);
       } else {
         setValues(null, false);
-      }*/
+      }
       setValues(null, false);
     } catch (error) {
       console.error("error getCurrentUser", error);
@@ -62,7 +62,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const login = async () => {
     setLoading(true);
     try {
-      /*  await GoogleSignin.hasPlayServices({
+      await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
       const response: any = await GoogleSignin.signIn();
@@ -76,7 +76,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
         setValues(userData, true);
       } else {
         setValues(null, false);
-      }*/
+      }
     } catch (error: any) {
       console.error("error login", error);
       setValues(null, false);
@@ -99,7 +99,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const logout = async () => {
     setValues(null, false);
 
-    // await GoogleSignin.signOut();
+    await GoogleSignin.signOut();
     setLoading(false);
   };
 
