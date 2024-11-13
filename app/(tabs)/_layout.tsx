@@ -16,6 +16,50 @@ export default function TabLayout() {
           ),
         }}
       />
+       <Tabs.Screen
+        name="StatementResults"
+        options={{
+          headerTitle: "Estado de resultados",
+          tabBarLabel: "Datos",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="albums" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Analytics"
+        options={{
+          headerTitle: "Análisis de datos",
+          tabBarLabel: "Análisis",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="analytics" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Results"
+        options={{
+          title: "Resultados",
+          tabBarLabel: "Resultados",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="bar-chart" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Configurations"
+        options={{
+          title: "Opciones",
+          tabBarLabel: "Opciones",
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="settings" color={color} size={24} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

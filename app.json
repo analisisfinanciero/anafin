@@ -17,7 +17,7 @@
       "package": "com.anafin.analisisfinanciero.app",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/AnaFin-icon.png",
         "backgroundColor": "#ffffff"
       }
     },

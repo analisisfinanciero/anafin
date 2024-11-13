@@ -53,13 +53,13 @@ const ResultsComponents = () => {
     ResultsService.getAllEarningsByUid(email)
       .then((response) => {
         const responseData: any[] = [];
-        response.forEach((doc) => {
+        response.forEach((doc: any) => {
           responseData.push(doc.data());
         });
         setResultsList(responseData);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading({ ...loading, resultsList: false });
@@ -147,7 +147,6 @@ const ResultsComponents = () => {
     setLoading({ ...loading, savingResult: true });
     ResultsService.insertResults(resultGenerated)
       .then((response) => {
-        console.log(response);
         if (response?.id) {
           getIAResults(user?.email ?? "");
           Alert.alert(
@@ -165,7 +164,7 @@ const ResultsComponents = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading({ ...loading, savingResult: false });
@@ -179,7 +178,7 @@ const ResultsComponents = () => {
         getIAResults(user?.email ?? "");
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setLoading({ ...loading, deleteResult: false });

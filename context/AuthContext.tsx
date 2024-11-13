@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
       } else {
         setValues(null, false);
       }*/
-        setValues(null, false);
+      setValues(null, false);
     } catch (error) {
       console.error("error getCurrentUser", error);
       setValues(null, false);
@@ -62,7 +62,7 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
   const login = async () => {
     setLoading(true);
     try {
-    /*  await GoogleSignin.hasPlayServices({
+      /*  await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
       const response: any = await GoogleSignin.signIn();
@@ -98,8 +98,8 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
 
   const logout = async () => {
     setValues(null, false);
-    console.log("Usuario deslogueado");
-   // await GoogleSignin.signOut();
+
+    // await GoogleSignin.signOut();
     setLoading(false);
   };
 
@@ -107,10 +107,8 @@ export const AuthContextProvider = ({ children }: ChildrenProps) => {
     setUser(user);
     setIsAuthenticated(isAuthenticated);
     if (user) {
-      console.log("Usuario logueado");
       router.replace("/Home");
     } else {
-      console.log("Usuario deslogueado");
       router.replace("/Login");
     }
   };

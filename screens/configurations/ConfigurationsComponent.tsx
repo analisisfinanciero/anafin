@@ -2,7 +2,7 @@ import CustomFormButton from "@/components/CustomFormButton";
 import { useAuth } from "@/context/AuthContext";
 import { useDataContext } from "@/context/DataContext";
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 
 const ConfigurationsComponent = () => {
   const { user, logout } = useAuth();

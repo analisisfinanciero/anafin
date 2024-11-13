@@ -31,7 +31,7 @@ const HomeComponent = () => {
       [
         {
           text: "Cancelar",
-          onPress: () => console.log("Cancelar"),
+          onPress: () => {},
           style: "cancel",
         },
         {
