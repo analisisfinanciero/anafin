@@ -74,16 +74,19 @@ const ResultsComponents = () => {
     const horizontalText = generateHorizontalText(
       analyticsInformation?.horizontalAnalytics
     );
+    const pasteText =
+      "Resultados del análisis horizontal para el año 2022 - año 2023.\nlos ingresos disminuyeron en un 26,6% que corresponde a una disminución por valor de $ 370.00 En cuanto a los gastos estos se redujeron en un 44,2% equivalente a $ 170.00 La disminución mas representativa estuvo en los gastos de ventas con el 47,2% Los gastos financieros se redujeron en el 30% lo que corresponde a $ 720.00 y de igual manera se disminuyeron los ingresos extraordinarios en el 82,4% que corresponde a un decremento de $ 8000.00 La utilidad del ejercicio presenta un leve incremento del 9,6% que corresponde a $ 143.00";
+
     const result = {
       id: resultId,
       title: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}`,
-      results: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}.\n\n${verticalText}`,
+      results: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}.\n\n${verticalText}\n${pasteText}.\n\n`,
       email: user?.email,
     };
     setTimeout(() => {
       setResultGenerated(result);
       setLoading({ ...loading, result: false });
-    }, 3000);
+    }, 5000);
     setResultGenerated(result);
   };
 
@@ -133,7 +136,7 @@ const ResultsComponents = () => {
         console.log("horizontalInformation", element);
 
         const introText = `Resultados del análisis horizontal en el ${element.currentYear}.\n`;
-        const netIncomeText = `La utilidad del ejercicio en el año ${element.currentYear} fue de ${element.netIncome}.`;
+        const netIncomeText = `La utilidad del ejercicio en el año ${element.currentYear}.Fue de ${element.netIncome}.`;
         const netIncomeLastYearText = `La utilidad del ejercicio en el año ${element.lastYear} fue de ${element.netIncomeLastYear}.`;
         const netIncomeVariationText = `La variación de la utilidad del ejercicio en el año ${element.currentYear} con respecto al año ${element.lastYear} fue del ${element.netIncomeVariation}%.`;
         text += `${introText}${netIncomeText} ${netIncomeLastYearText} ${netIncomeVariationText}\n\n`;
