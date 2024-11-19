@@ -42,7 +42,176 @@ export class HorizontalAnalyticsClassByYear
       return null;
     }
   }
+
+  generateHorizontalAnalysisValues() {
+    if (this.type === "service") {
+      return this.generateServiceHorizontalAnalysisValues();
+    } else if (this.type === "commercial") {
+      return this.generateCommercialHorizontalAnalysisValues();
+    } else {
+      return null;
+    }
+  }
+
   generateServiceHorizontalAnalysis() {
+    const horizontalAnalysisObject = new ServiceInformation(
+      `${this.dataInformationBaseYear.currentYear} - ${this.dataInformationByYear.currentYear}`
+    );
+    horizontalAnalysisObject.creditIncome = this.calculatePercentage(
+      this.dataInformationBaseYear.creditIncome,
+      this.dataInformationByYear.creditIncome
+    );
+    horizontalAnalysisObject.cashIncome = this.calculatePercentage(
+      this.dataInformationBaseYear.cashIncome,
+      this.dataInformationByYear.cashIncome
+    );
+    horizontalAnalysisObject.grossSales = this.calculatePercentage(
+      this.dataInformationBaseYear.grossSales,
+      this.dataInformationByYear.grossSales
+    );
+    horizontalAnalysisObject.operatingSalesExpenses = this.calculatePercentage(
+      this.dataInformationBaseYear.operatingSalesExpenses,
+      this.dataInformationByYear.operatingSalesExpenses
+    );
+    horizontalAnalysisObject.administrativeOperatingExpenses =
+      this.calculatePercentage(
+        this.dataInformationBaseYear.administrativeOperatingExpenses,
+        this.dataInformationByYear.administrativeOperatingExpenses
+      );
+    horizontalAnalysisObject.operatingProfit = this.calculatePercentage(
+      this.dataInformationBaseYear.operatingProfit,
+      this.dataInformationByYear.operatingProfit
+    );
+    horizontalAnalysisObject.financialIncome = this.calculatePercentage(
+      this.dataInformationBaseYear.financialIncome,
+      this.dataInformationByYear.financialIncome
+    );
+    horizontalAnalysisObject.financialExpenses = this.calculatePercentage(
+      this.dataInformationBaseYear.financialExpenses,
+      this.dataInformationByYear.financialExpenses
+    );
+    horizontalAnalysisObject.extraordinaryIncome = this.calculatePercentage(
+      this.dataInformationBaseYear.extraordinaryIncome,
+      this.dataInformationByYear.extraordinaryIncome
+    );
+    horizontalAnalysisObject.extraordinaryExpenses = this.calculatePercentage(
+      this.dataInformationBaseYear.extraordinaryExpenses,
+      this.dataInformationByYear.extraordinaryExpenses
+    );
+    horizontalAnalysisObject.profitBeforeTax = this.calculatePercentage(
+      this.dataInformationBaseYear.profitBeforeTax,
+      this.dataInformationByYear.profitBeforeTax
+    );
+    horizontalAnalysisObject.incomeTax = this.calculatePercentage(
+      this.dataInformationBaseYear.incomeTax,
+      this.dataInformationByYear.incomeTax
+    );
+    horizontalAnalysisObject.netIncome = this.calculatePercentage(
+      this.dataInformationBaseYear.netIncome,
+      this.dataInformationByYear.netIncome
+    );
+    return horizontalAnalysisObject;
+  }
+  generateCommercialHorizontalAnalysis() {
+    const dataInformationValueParse = this
+      .dataInformationByYear as CommercialInformationInterface;
+    const dataInformationValueParseBase = this
+      .dataInformationBaseYear as CommercialInformationInterface;
+    const horizontalAnalysisObject = new CommercialInformation(
+      `${this.dataInformationBaseYear.currentYear} - ${this.dataInformationByYear.currentYear}`
+    );
+    horizontalAnalysisObject.creditIncome = this.calculatePercentage(
+      dataInformationValueParseBase.creditIncome,
+      dataInformationValueParse.creditIncome
+    );
+    horizontalAnalysisObject.cashIncome = this.calculatePercentage(
+      dataInformationValueParseBase.cashIncome,
+      dataInformationValueParse.cashIncome
+    );
+    horizontalAnalysisObject.grossSales = this.calculatePercentage(
+      dataInformationValueParseBase.grossSales,
+      dataInformationValueParse.grossSales
+    );
+    horizontalAnalysisObject.returnsAndDiscounts = this.calculatePercentage(
+      dataInformationValueParseBase.returnsAndDiscounts,
+      dataInformationValueParse.returnsAndDiscounts
+    );
+    horizontalAnalysisObject.netSales = this.calculatePercentage(
+      dataInformationValueParseBase.netSales,
+      dataInformationValueParse.netSales
+    );
+    horizontalAnalysisObject.initialInventory = this.calculatePercentage(
+      dataInformationValueParseBase.initialInventory,
+      dataInformationValueParse.initialInventory
+    );
+    horizontalAnalysisObject.finalInventory = this.calculatePercentage(
+      dataInformationValueParseBase.finalInventory,
+      dataInformationValueParse.finalInventory
+    );
+    horizontalAnalysisObject.purchasesCredit = this.calculatePercentage(
+      dataInformationValueParseBase.purchasesCredit,
+      dataInformationValueParse.purchasesCredit
+    );
+    horizontalAnalysisObject.purchasesCash = this.calculatePercentage(
+      dataInformationValueParseBase.purchasesCash,
+      dataInformationValueParse.purchasesCash
+    );
+    horizontalAnalysisObject.costOfSales = this.calculatePercentage(
+      dataInformationValueParseBase.costOfSales,
+      dataInformationValueParse.costOfSales
+    );
+    horizontalAnalysisObject.grossOperatingIncome = this.calculatePercentage(
+      dataInformationValueParseBase.grossOperatingIncome,
+      dataInformationValueParse.grossOperatingIncome
+    );
+    horizontalAnalysisObject.operatingSalesExpenses = this.calculatePercentage(
+      dataInformationValueParseBase.operatingSalesExpenses,
+      dataInformationValueParse.operatingSalesExpenses
+    );
+    horizontalAnalysisObject.administrativeOperatingExpenses =
+      this.calculatePercentage(
+        dataInformationValueParseBase.administrativeOperatingExpenses,
+        dataInformationValueParse.administrativeOperatingExpenses
+      );
+    horizontalAnalysisObject.generalExpenses = this.calculatePercentage(
+      dataInformationValueParseBase.generalExpenses,
+      dataInformationValueParse.generalExpenses
+    );
+    horizontalAnalysisObject.operatingProfit = this.calculatePercentage(
+      dataInformationValueParseBase.operatingProfit,
+      dataInformationValueParse.operatingProfit
+    );
+    horizontalAnalysisObject.financialIncome = this.calculatePercentage(
+      dataInformationValueParseBase.financialIncome,
+      dataInformationValueParse.financialIncome
+    );
+    horizontalAnalysisObject.financialExpenses = this.calculatePercentage(
+      dataInformationValueParseBase.financialExpenses,
+      dataInformationValueParse.financialExpenses
+    );
+    horizontalAnalysisObject.extraordinaryIncome = this.calculatePercentage(
+      dataInformationValueParseBase.extraordinaryIncome,
+      dataInformationValueParse.extraordinaryIncome
+    );
+    horizontalAnalysisObject.extraordinaryExpenses = this.calculatePercentage(
+      dataInformationValueParseBase.extraordinaryExpenses,
+      dataInformationValueParse.extraordinaryExpenses
+    );
+    horizontalAnalysisObject.profitBeforeTax = this.calculatePercentage(
+      dataInformationValueParseBase.profitBeforeTax,
+      dataInformationValueParse.profitBeforeTax
+    );
+    horizontalAnalysisObject.incomeTax = this.calculatePercentage(
+      dataInformationValueParseBase.incomeTax,
+      dataInformationValueParse.incomeTax
+    );
+    horizontalAnalysisObject.netIncome = this.calculatePercentage(
+      dataInformationValueParseBase.netIncome,
+      dataInformationValueParse.netIncome
+    );
+    return horizontalAnalysisObject;
+  }
+  generateServiceHorizontalAnalysisValues() {
     const horizontalAnalysisObject = new ServiceInformation(
       `${this.dataInformationBaseYear.currentYear} - ${this.dataInformationByYear.currentYear}`
     );
@@ -101,7 +270,7 @@ export class HorizontalAnalyticsClassByYear
     );
     return horizontalAnalysisObject;
   }
-  generateCommercialHorizontalAnalysis() {
+  generateCommercialHorizontalAnalysisValues() {
     const dataInformationValueParse = this
       .dataInformationByYear as CommercialInformationInterface;
     const dataInformationValueParseBase = this
@@ -200,10 +369,14 @@ export class HorizontalAnalyticsClassByYear
     );
     return horizontalAnalysisObject;
   }
-  calculateValue(baseValue: number, newValue: number) {
-    if (baseValue === 0) return 0;
+  calculatePercentage(baseValue: number, newValue: number) {
+    if (baseValue === 0) return newValue;
     const result =
       parseFloat((((newValue - baseValue) / baseValue) * 100).toFixed(1)) ?? 0;
+    return isNaN(result) ? 0 : result;
+  }
+  calculateValue(baseValue: number, newValue: number) {
+    const result = parseFloat((newValue - baseValue).toFixed(1)) ?? 0;
     return isNaN(result) ? 0 : result;
   }
 }

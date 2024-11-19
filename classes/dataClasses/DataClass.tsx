@@ -30,11 +30,13 @@ export class AnalyticsInformation implements AnalyticsInformationInterface {
   hasData: boolean;
   verticalAnalytics: (VerticalAnalyticsClassByYearInterface | null)[];
   horizontalAnalytics: (HorizontalAnalyticsClassByYearInterface | null)[];
+  horizontalAnalysisValues: (HorizontalAnalyticsClassByYearInterface | null)[];
 
   constructor() {
     this.hasData = false;
     this.verticalAnalytics = [];
     this.horizontalAnalytics = [];
+    this.horizontalAnalysisValues = [];
   }
 }
 export class DataInformation implements DataInformationInterface {

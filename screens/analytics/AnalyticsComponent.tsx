@@ -19,7 +19,7 @@ const AnalyticsComponent = () => {
     handleSetAnalyticsInformation,
   } = useDataContext();
 
-  //modificar dupon en un solo componente
+  //modificar duPont en un solo componente
   const [isOpenDuPont, setIsOpenDuPont] = useState(false);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const AnalyticsComponent = () => {
 
   const getHorizontalAndVerticalAnalysis = () => {
     const horizontalAnalysisArray = new Array();
+    const horizontalAnalysisValueArray = new Array();
     dataInformation?.dataInformation?.forEach((dataByYear, index) => {
       if (index !== 0) {
         const baseYear = dataInformation?.dataInformation[index - 1];
@@ -43,8 +44,17 @@ const AnalyticsComponent = () => {
             enterpriseInformation?.enterpriseType ?? null
           ).generateHorizontalAnalysis()
         );
+        horizontalAnalysisValueArray.push(
+          new HorizontalAnalyticsClassByYear(
+            dataByYear,
+            baseYear,
+            enterpriseInformation?.enterpriseType ?? null
+          ).generateHorizontalAnalysisValues()
+        )
       }
     });
+  
+
     setHorizontalAnalysis(horizontalAnalysisArray);
     const verticalAnalysisArray = dataInformation?.dataInformation?.map(
       (dataByYear) => {
@@ -59,6 +69,7 @@ const AnalyticsComponent = () => {
       hasData: true,
       verticalAnalytics: verticalAnalysisArray,
       horizontalAnalytics: horizontalAnalysisArray,
+      horizontalAnalysisValues: horizontalAnalysisValueArray
     });
   };
 

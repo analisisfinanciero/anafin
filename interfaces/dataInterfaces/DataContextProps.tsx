@@ -34,6 +34,7 @@ export interface AnalyticsInformationInterface {
   hasData: boolean;
   verticalAnalytics: Array<VerticalAnalyticsClassByYearInterface | null>;
   horizontalAnalytics: Array<HorizontalAnalyticsClassByYearInterface | null>;
+  horizontalAnalysisValues: Array<HorizontalAnalyticsClassByYearInterface | null>;
 }
 
 export interface ServiceInformationInterface {

@@ -72,24 +72,21 @@ const ResultsComponents = () => {
       analyticsInformation?.verticalAnalytics
     );
     const horizontalText = generateHorizontalText(
-      analyticsInformation?.horizontalAnalytics
+      analyticsInformation?.horizontalAnalytics,
+      analyticsInformation?.horizontalAnalysisValues
     );
-    const pasteText =
-      "Resultados del análisis horizontal para el año 2022 - año 2023.\nlos ingresos disminuyeron en un 26,6% que corresponde a una disminución por valor de $ 370.00 En cuanto a los gastos estos se redujeron en un 44,2% equivalente a $ 170.00 La disminución mas representativa estuvo en los gastos de ventas con el 47,2% Los gastos financieros se redujeron en el 30% lo que corresponde a $ 720.00 y de igual manera se disminuyeron los ingresos extraordinarios en el 82,4% que corresponde a un decremento de $ 8000.00 La utilidad del ejercicio presenta un leve incremento del 9,6% que corresponde a $ 143.00";
-
     const result = {
       id: resultId,
       title: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}`,
-      results: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}.\n\n${verticalText}\n${pasteText}.\n\n`,
+      results: `Resultados de la empresa ${enterpriseInformation?.enterpriseName} NIT: ${enterpriseInformation?.enterpriseNIT}.\n\n${verticalText}\n${horizontalText}`,
       email: user?.email,
     };
     setTimeout(() => {
       setResultGenerated(result);
       setLoading({ ...loading, result: false });
-    }, 5000);
+    }, 6000);
     setResultGenerated(result);
   };
-
   const generateVerticalText = (verticalInformation: any) => {
     let text = "";
     if (enterpriseInformation?.enterpriseType === "service") {
@@ -118,7 +115,7 @@ const ResultsComponents = () => {
         const netSalesText = `Del cien por ciento de las ventas, teniendo en cuenta las devoluciones y los descuentos el ${element.netSales}% corresponde a las ventas netas.`;
         const costOfSalesText = `El costo de ventas corresponde al ${element.costOfSales}%.`;
         const grossOperatingIncomeText = `Quedando una utilidad bruta operacional equivalente al ${element.grossOperatingIncome}%.`;
-        const operatingProfitText = `Con lo cual se absorben los gastos operacionales para obtener una utilidad operacional del ${element.operatingProfit}.`;
+        const operatingProfitText = `Con lo cual se absorben los gastos operacionales para obtener una utilidad operacional del ${element.operatingProfit}%.`;
         const netIncomeText =
           element.netIncome > 0
             ? `Con esta utilidad se cubren los gastos financieros y extraordinarios, y el impuesto a la renta quedando una utilidad positiva del ejercicio correspondiente al ${element.netIncome}%.`
@@ -128,20 +125,77 @@ const ResultsComponents = () => {
     }
     return text;
   };
-
-  const generateHorizontalText = (horizontalInformation: any) => {
+  const generateHorizontalText = (
+    horizontalInformation: any,
+    horizontalInformationValue: any
+  ) => {
     let text = "";
     if (enterpriseInformation?.enterpriseType === "service") {
-      horizontalInformation?.forEach((element: any) => {
-        console.log("horizontalInformation", element);
-
+      horizontalInformation?.forEach((element: any, index: number) => {
         const introText = `Resultados del análisis horizontal en el ${element.currentYear}.\n`;
-        const netIncomeText = `La utilidad del ejercicio en el año ${element.currentYear}.Fue de ${element.netIncome}.`;
-        const netIncomeLastYearText = `La utilidad del ejercicio en el año ${element.lastYear} fue de ${element.netIncomeLastYear}.`;
-        const netIncomeVariationText = `La variación de la utilidad del ejercicio en el año ${element.currentYear} con respecto al año ${element.lastYear} fue del ${element.netIncomeVariation}%.`;
-        text += `${introText}${netIncomeText} ${netIncomeLastYearText} ${netIncomeVariationText}\n\n`;
+        let grossSalesText = "";
+        if (element.grossSales > 0) {
+          grossSalesText = `Los ingresos del ejercicio aumentaron en un ${element.grossSales} %. Lo que corresponde a un aumento de $ ${horizontalInformationValue[index].grossSales}.`;
+        } else if (element.grossSales < 0) {
+          grossSalesText = `Los ingresos del ejercicio disminuyeron en un ${
+            element.grossSales * -1
+          } %. Lo que corresponde a una disminución de $ ${
+            horizontalInformationValue[index].grossSales * -1
+          }.`;
+        } else {
+          grossSalesText = `Los ingresos del ejercicio se mantuvieron estables.`;
+        }
+        const netExpenses =
+          element.operatingSalesExpenses +
+          element.administrativeOperatingExpenses;
+        const netExpensesValue =
+          horizontalInformationValue[index].operatingSalesExpenses +
+          horizontalInformationValue[index].administrativeOperatingExpenses;
+        const netExpensesText =
+          netExpenses > 0
+            ? `En cuanto a los gastos, estos tuvieron un aumento de ${netExpenses} %, correspondientes a un valor de $ ${netExpensesValue}.`
+            : `En cuanto a los gastos, estos se redujeron en un ${
+                netExpenses * -1
+              } %, correspondientes a un valor de $ ${netExpensesValue * -1}.`;
+        const netSalesText =
+          element.netSales > 0
+            ? `La utilidad del ejercicio representa un aumento del ${element.netSales} %, el cual corresponde a un valor de $ ${horizontalInformationValue[index].netSales}.`
+            : `La utilidad del ejercicio representa una disminución del ${
+                element.netSales * -1
+              } %, el cual corresponde a un valor de $ ${
+                horizontalInformationValue[index].netSales * -1
+              }.`;
+        text += `${introText}${grossSalesText} ${netExpensesText} ${netSalesText}\n\n`;
       });
     } else {
+      horizontalInformation?.forEach((element: any, index: number) => {
+        const introText = `Resultados del análisis horizontal en el ${element.currentYear}.\n`;
+        const netSalesText =
+          element.netSales > 0
+            ? `Del cien por ciento de las ventas, teniendo en cuenta las devoluciones y los descuentos, se tuvo un incremento del ${element.netSales} %. Lo que corresponde a un aumento de $ ${horizontalInformationValue[index].netSales}.`
+            : `Del cien por ciento de las ventas, teniendo en cuenta las devoluciones y los descuentos, se tuvo una disminución del ${
+                element.netSales * -1
+              } %. Lo que corresponde a una disminución de $ ${
+                horizontalInformationValue[index].netSales * -1
+              }.`;
+        const costOfSalesText =
+          element.costOfSales > 0
+            ? `El costo de ventas tuvo un incremento del ${element.costOfSales}%. Lo que corresponde a un aumento de $ ${horizontalInformationValue[index].costOfSales}.`
+            : `El costo de ventas tuvo una disminución del ${
+                element.costOfSales * -1
+              }%. Lo que corresponde a una disminución de $ ${
+                horizontalInformationValue[index].costOfSales * -1
+              }.`;
+        const netIncomeText =
+          element.netIncome > 0
+            ? `Por lo que la utilidad del ejercicio representa un incremento del ${element.netIncome}%, equivalente a un aumento de $${horizontalInformationValue[index].netIncome}.`
+            : `Por lo que la utilidad del ejercicio representa una disminución del ${
+                element.netIncome * -1
+              }%, equivalente a una disminución de $${
+                horizontalInformationValue[index].netIncome * -1
+              }.`;
+        text += `${introText}${netSalesText} ${costOfSalesText} ${netIncomeText}\n\n`;
+      });
     }
     return text;
   };
