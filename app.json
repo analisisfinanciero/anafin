@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anafin.analisisfinanciero.app",
+      "bundleIdentifier": "com.amca.anafinapp.v2",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json",
-      "package": "com.anafin.analisisfinanciero.app",
+      "package": "com.amca.anafinapp.v2",
        "versionCode": 1
     },
     "web": {
