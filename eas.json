@@ -9,7 +9,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "apk"
       },
       "ios": {
         "simulator": true
@@ -20,7 +20,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "apk"
       },
       "ios": {
         "simulator": true
@@ -28,12 +28,12 @@
     },
     "production": {
       "autoIncrement": true,
-      "distribution": "internal",
+      "distribution": "store",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "app-bundle"   
       },
       "ios": {
-        "simulator": true
+        "simulator": false
       }
     }
   },
@@ -41,3 +41,5 @@
     "production": {}
   }
 }
+
+
