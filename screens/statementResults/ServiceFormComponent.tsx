@@ -2625,7 +2625,7 @@ const ServiceFormComponent: React.FC<ServiceFormComponentProps> = ({
                     {values.totalactias !== values.totalfinanas &&
                       !(values.totalactias === 0 && values.totalfinanas === 0) && (
                         <Text className="text-center text-red-600 font-semibold mt-2">
-                          ⚠️ El total de inversión debe ser igual al total de financiación.
+                          ⚠️ El total de inversión debe ser igual al total de financiación.por favor corregir
                         </Text>
                       )}
 
