@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "378349837326",
+    "project_id": "analisis-financiero-anafin",
+    "storage_bucket": "analisis-financiero-anafin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378349837326:android:1db2b7539561419eba305f",
+        "android_client_info": {
+          "package_name": "com.amca.anafinapp.v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxEwgMVCqy3MAaayCZIUTQIOyI1M220YA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378349837326:android:f00dcb8a202d2bd8ba305f",
+        "android_client_info": {
+          "package_name": "com.anafin.analisisfinanciero.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378349837326-nofgm19tkr5fg1mopu3e9k1q5i35lffp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anafin.analisisfinanciero.app",
+            "certificate_hash": "eaa7a42bccaea9b1c499da1aba6206d2f87444e5"
+          }
+        },
+        {
+          "client_id": "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxEwgMVCqy3MAaayCZIUTQIOyI1M220YA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378349837326-88ovh8e0tg6nqdg96v3a882ql486lpdt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
